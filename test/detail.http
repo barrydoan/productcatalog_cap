@@ -1,0 +1,5 @@
+### Show product detail by NDC number
+GET http://localhost:4004/admin/Products?$filter=NDC eq '00904-0012-24'
+
+### Show product detail by shortId
+GET http://localhost:4004/admin/Products?$filter=shortId eq '10238784'

@@ -15,4 +15,3 @@ Content-Type: application/json
     { "product_ID":2, "amount":1 }
 ]}
 
-# Sending this three times should result in a 409: 5 exceeds stock for book #201
