@@ -1,0 +1,9 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="admin.admin.controller.MainView" displayBlock="true">
+    <Page id="page" title="{i18n>title}">
+        <content>
+            
+            <Image src="img/10048113-29988-Abc700Wx700H.jpg" width="140px" height="140px" id="image0"/>
+            
+        </content>
+    </Page>
+</mvc:View>

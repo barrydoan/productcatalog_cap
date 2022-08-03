@@ -5,30 +5,34 @@ using { Currency, managed, cuid } from '@sap/cds/common';
 
 entity Products : managed {
     key ID : Integer;
+    shortId: String(8);
+    NDC: String(20);
+    UPC: String(20);
     name  : String(111);
     stock  : Integer;
     acqCost: Decimal(9,2);
     retailPrice  : Decimal(9,2);
     awp: Decimal(9,2);
-    storeId: String(8);
-    NDC: String(20);
-    UPC: String(20);
+    rebate: Decimal(9,2);
+    perDose: Decimal(9,2);
+    unitSize: Decimal(9,2);
+    form: String(10);
+    caseQuantity: Integer;
+    imageUrl  : String;
     currency : Currency;
-    suplier: Association to Supliers;
-    category: Association to Categoris;
-    image : LargeBinary @Core.MediaType: 'image/png';
-    imageUrl  : String @Core.IsURL @Core.MediaType: 'image/png';
+    supplier: Association to Suppliers;
+    category: Association to Categories;
 }
 
 
-entity Supliers : managed {
+entity Suppliers : managed {
     key ID : Integer;
     name   : String(111);
     status: String(10);
-    products  : Association to many Products on products.suplier = $self;
+    products  : Association to many Products on products.supplier = $self;
 }
 
-entity Categoris: managed {
+entity Categories: managed, cuid {
     key ID : Integer;
     name   : String(111);
     products : Association to many Products on products.category = $self;

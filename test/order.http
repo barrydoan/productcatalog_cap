@@ -1,0 +1,18 @@
+
+### List Product with their current stocks
+GET http://localhost:4004/admin/Products?$select=ID,stock
+
+### List all Orders
+GET http://localhost:4004/admin/Orders?
+&$expand=Items
+
+### Submit Orders
+POST http://localhost:4004/browse/Orders
+Content-Type: application/json
+
+{ "OrderNo":"2022-08-03", "Items":[
+    { "product_ID":1, "amount":1 },
+    { "product_ID":2, "amount":1 }
+]}
+
+# Sending this three times should result in a 409: 5 exceeds stock for book #201

@@ -6,7 +6,7 @@ service CatalogService {
     @readonly entity Products as SELECT from my.Products {
         *,
         category.name as category,
-        suplier.name as suplier
+        supplier.name as supplier
     } excluding { createdBy, modifiedBy };
 
     entity Orders as projection on my.Orders;
