@@ -1,0 +1,12 @@
+### List all Carts
+GET http://localhost:4004/admin/Carts?
+&$expand=Items
+
+### Create shopping cart
+POST http://localhost:4004/browse/Carts
+Content-Type: application/json
+
+{ "CardNo":"2022-08-03", "Items":[
+    { "product_ID":1, "amount":1 },
+    { "product_ID":2, "amount":1 }
+]}

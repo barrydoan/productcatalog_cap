@@ -1,17 +1,20 @@
 
 ### List Product with their current stocks
-GET http://localhost:4004/admin/Products?$select=ID,stock
+GET http://localhost:4004/admin/Products?$select=ID,stock,acqCost
 
 ### List all Orders
 GET http://localhost:4004/admin/Orders?
 &$expand=Items
+
+###
+GET http://localhost:4004/admin/Orders
 
 ### Submit Orders
 POST http://localhost:4004/browse/Orders
 Content-Type: application/json
 
 { "OrderNo":"2022-08-03", "Items":[
-    { "product_ID":1, "amount":1 },
-    { "product_ID":2, "amount":1 }
+    { "product_ID":1, "amount":1, "netAmount" :  0.6},
+    { "product_ID":2, "amount":1, "netAmount" : 0.83}
 ]}
 

@@ -52,4 +52,19 @@ entity OrderItems : cuid {
     netAmount : Decimal(9,2);
 }
 
+entity Carts : cuid, managed {
+    CardNo  : String @title:'Cart Number'; //> readable key
+    Items    : Composition of many CartItems on Items.parent = $self;
+    total    : Decimal(9,2) @readonly;
+    currency : Currency;
+}
+
+
+entity CartItems : cuid {
+    parent    : Association to Carts;
+    product      : Association to Products;
+    amount    : Integer;
+    netAmount : Decimal(9,2);
+}
+
 
