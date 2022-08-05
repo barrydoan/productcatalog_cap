@@ -6,7 +6,10 @@ const { Orders } = cds.entities
 module.exports = cds.service.impl(srv => {
     // reduce stock of the order
     srv.before ('CREATE', 'Orders', _updateStatus)
+    // add item to card
+    
 })
+
 
 
 /** Reduce stock of ordered products if available stock suffices */
@@ -32,4 +35,8 @@ async function _updateStatus (req) {
             }
         })
     }))
+}
+
+async function createCartHandler(req) {
+    console.log(req)
 }

@@ -10,6 +10,4 @@ service CatalogService {
     } excluding { createdBy, modifiedBy };
 
     entity Orders as projection on my.Orders;
-
-    entity Carts as projection on my.Carts;
 }

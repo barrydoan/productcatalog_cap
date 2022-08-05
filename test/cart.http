@@ -1,12 +1,47 @@
 ### List all Carts
-GET http://localhost:4004/admin/Carts?
+GET http://localhost:4004/cart/Carts?
 &$expand=Items
 
 ### Create shopping cart
-POST http://localhost:4004/browse/Carts
+POST http://localhost:4004/cart/Carts
 Content-Type: application/json
 
-{ "CardNo":"2022-08-03", "Items":[
-    { "product_ID":1, "amount":1 },
-    { "product_ID":2, "amount":1 }
-]}
+{   
+    "ID": "e47de808-bae1-4844-a56a-8a6830142631",
+    "CardNo":"2022-08-03"
+}
+
+### Add ore item to cart
+POST http://localhost:4004/cart/CartItems
+Content-Type: application/json
+
+{
+    "parent_ID": "e47de808-bae1-4844-a56a-8a6830142631",
+    "product_ID": 2
+}
+
+
+### add item to cart for testing
+
+POST http://localhost:4004/cart/CartItems
+Content-Type: application/json
+
+{
+    "ID": "2d7685fc-f3a2-4b2e-a382-ccc4754c9bc7",
+    "parent_ID": "e47de808-bae1-4844-a56a-8a6830142631",
+    "product_ID": 3
+}
+
+
+### Delete item
+DELETE http://localhost:4004/cart/CartItems/2d7685fc-f3a2-4b2e-a382-ccc4754c9bc7
+
+###
+PUT http://localhost:4004/cart/CartItems/2d7685fc-f3a2-4b2e-a382-ccc4754c9bc7
+Content-Type: application/json
+
+{
+    "parent_ID": "e47de808-bae1-4844-a56a-8a6830142631",
+    "product_ID": 3,
+    "amount": 3
+}

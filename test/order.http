@@ -3,7 +3,7 @@
 GET http://localhost:4004/admin/Products?$select=ID,stock,acqCost
 
 ### List all Orders
-GET http://localhost:4004/admin/Orders?
+GET http://localhost:4004/browse/Orders?
 &$expand=Items
 
 ###
