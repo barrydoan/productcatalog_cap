@@ -1,0 +1,24 @@
+git push -u origin master
+#Start the project 
+npm start
+#Start the project with watch
+cds watch
+#deploy project to sqlite
+cds deploy --to sqlite 
+#Add deploy to hana
+cds add hana
+#Build project for production
+cds build --production
+#Login to cf before deploying to hana
+cf Login
+#deploy to hana
+cds deploy --to hana
+#change kind to hana package.json to work with hana database
+#add mta file to deploy to cf
+cds add mta
+#build multi target application to deploy to cf
+mbt build
+#deploy to cf
+cf deploy mta_archives/mytravelrequest_cap_1.0.0.mtr
+#check the application
+cf apps 
