@@ -1,2 +1,3 @@
 
-using from './admin/annotations';
+
+using from './frontend/annotations';
