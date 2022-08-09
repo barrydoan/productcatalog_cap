@@ -1,88 +1,138 @@
 <mvc:View 
 	xmlns:mvc="sap.ui.core.mvc" 
+    xmlns:core="sap.ui.core"
 	xmlns="sap.m" 
 	xmlns:tnt="sap.tnt" 
+    xmlns:semantic="sap.f.semantic"
 	controllerName="frontend.controller.MainView" 
 	displayBlock="true">
-    <Page id="page" title="{i18n>title}">
-        <content>
-        <Table noDataText="No data" id="table0" 
-            items="{      
-                path: '/Products',     
-                sorter: {       
-                    path: 'name'      
-                }
-                }"
-            growing="true"
-            growingScrollToLoad="true"
-            stickyColumnHeader="true"
-            >
-            <items>
-                <ColumnListItem type="Active" id="item0">
-                    <cells>  
-                        <HBox alignItems="Center" justifyContent="SpaceBetween">
-                            <Image src="img/{imageUrl}" width="100px" height="100px"  class="sapUiSmallMargin"/>
-                            <VBox width="100%" direction="Column">
-                                <Text text="{name}" />
-                                <Text text="{NDC}" />
-                                <Text text="{shortId}"/>
-                                <Text text="{supplier}"/>
-                                <tnt:InfoLabel id="il3" text="{stock}" renderMode="Narrow" colorScheme="7"/>
-                            </VBox>
-                        </HBox>
-                        <Text text="{form}"/>
-                        <Text text="{unitSize}"/>
-                        <Text text="${perDose}"/>
-                        <Text text="${rebate}"/>
-                        <Text text="${awp}"/>
-                        <Text text="${retailPrice}"/>
-                        <Text text="${acqCost}"/>
-                    </cells>
-                </ColumnListItem>
-            </items>
-            <columns>
-                <Column width="26em">
-                    <header>
-                        <Label text="Description"/>
-                    </header>
-                </Column>
-                <Column width="8em">
-                    <header>
-                        <Label text="Form"/>
-                    </header>
-                </Column>
-                 <Column  width="8em">
-                    <header>
-                        <Label text="UnitSize"/>
-                    </header>
-                </Column>
-                <Column  width="8em">
-                    <header>
-                        <Label text="PerDose"/>
-                    </header>
-                </Column >
-                 <Column width="8em">
-                    <header>
-                        <Label text="Rebate"/>
-                    </header>
-                </Column>
-                 <Column width="8em">
-                    <header>
-                        <Label text="AWP"/>
-                    </header>
-                </Column>
-                 <Column width="8em">
-                    <header>
-                        <Label text="Retail Price"/>
-                    </header>
-                </Column>
-                 <Column width="8em">
-                    <header>
-                        <Label text="Acq Cost"/>
-                    </header>
-                </Column>
-            </columns>
-        </Table>
-        </content>
-    </Page>
+    <semantic:SemanticPage
+        id="page"
+        headerPinnable="false"
+        toggleHeaderOnTitleClick="false">
+
+        <semantic:titleHeading>
+            <Title
+                text="Product catalog"
+                level="H2"/>
+        </semantic:titleHeading>
+
+        <semantic:content>
+            <Table noDataText="No data" id="table" 
+                items="{      
+                    path: '/Products',     
+                    sorter: {       
+                        path: 'name'      
+                    }
+                    }"
+                growing="true"
+                growingScrollToLoad="true">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title id="tableHeader"
+                            text="Products" />
+                        <ToolbarSpacer />
+                        <ComboBox id="oComboBoxCategory"
+                            selectionChange="onCategoryChange"
+                            showClearIcon="true"
+                            items="{
+                                path: '/Categories',
+                                sorter: { path: 'name' }
+                            }">
+                            <core:Item key="{name}"
+                                text="{name}" />
+                        </ComboBox>
+                        <ComboBox id="oComboBoxSupplier"
+                            selectionChange="onSupplierChange"
+                            showClearIcon="true"
+                            items="{
+                                path: '/Suppliers',
+                                sorter: { path: 'name' }
+                            }">
+                            <core:Item key="{name}"
+                                text="{name}" />
+                        </ComboBox>
+                        <Button tooltip="Sort"
+                            icon="sap-icon://sort"
+                            press="handleSortButtonPressed" />
+                        <SearchField id="searchField"
+                            tooltip="Search"
+                            search=".onSearch"
+                            width="auto">
+                        </SearchField>
+                    </Toolbar>
+                </headerToolbar>
+                <items>
+                    <ColumnListItem type="Active" id="item0">
+                        <cells>  
+                            <HBox alignItems="Center" justifyContent="SpaceBetween">
+                                <Image src="img/{imageUrl}" width="100px" height="100px"  class="sapUiSmallMargin"/>
+                                <VBox width="100%" direction="Column">
+                                    <Text text="{name}" />
+                                    <Text text="{NDC}" />
+                                    <Text text="{shortId}"/>
+                                    <Text text="{supplierName}"/>
+                                    <tnt:InfoLabel id="il3" text="{stock}" renderMode="Narrow" colorScheme="7"/>
+                                </VBox>
+                            </HBox>
+                            <Text text="{form}"/>
+                            <Text text="{unitSize}"/>
+                            <Text text="${perDose}"/>
+                            <Text text="${rebate}"/>
+                            <Text text="${awp}"/>
+                            <Text text="${retailPrice}"/>
+                            <Text text="${acqCost}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+                <columns>
+                    <Column width="26em">
+                        <header>
+                            <Label text="Description"/>
+                        </header>
+                    </Column>
+                    <Column width="8em">
+                        <header>
+                            <Label text="Form"/>
+                        </header>
+                    </Column>
+                    <Column  width="8em">
+                        <header>
+                            <Label text="UnitSize"/>
+                        </header>
+                    </Column>
+                    <Column  width="8em">
+                        <header>
+                            <Label text="PerDose"/>
+                        </header>
+                    </Column >
+                    <Column width="8em">
+                        <header>
+                            <Label text="Rebate"/>
+                        </header>
+                    </Column>
+                    <Column width="8em">
+                        <header>
+                            <Label text="AWP"/>
+                        </header>
+                    </Column>
+                    <Column width="8em">
+                        <header>
+                            <Label text="Retail Price"/>
+                        </header>
+                    </Column>
+                    <Column width="8em">
+                        <header>
+                            <Label text="Acq Cost"/>
+                        </header>
+                    </Column>
+                </columns>
+            </Table>
+        </semantic:content>
+
+        <semantic:sendEmailAction>
+            <semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
+        </semantic:sendEmailAction>
+
+    </semantic:SemanticPage>
 </mvc:View>
