@@ -19,6 +19,7 @@ entity Products : managed {
     form: String(10);
     caseQuantity: Integer;
     imageUrl  : String;
+    data: LargeBinary @Core.MediaType: 'application/binary';
     currency : Currency;
     supplier: Association to Suppliers;
     category: Association to Categories;

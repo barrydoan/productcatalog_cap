@@ -45,3 +45,10 @@ Content-Type: application/json
     "product_ID": 3,
     "amount": 3
 }
+
+### 
+PUT http://localhost:4004/cart/Products(1)/data
+Content-Type: application/binary
+
+
+ 
