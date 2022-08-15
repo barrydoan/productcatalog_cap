@@ -54,7 +54,7 @@
       "db": {
         "kind": "hana",
         "credentials": {
-          "database": "sqlite.db"
+          "database": "productcatalog.db"
         }
       }
     },
@@ -63,8 +63,6 @@
     }
   },
   "sapux": [
-    "app/testproject",
-    "app/admin",
     "app/frontend"
   ]
 }
