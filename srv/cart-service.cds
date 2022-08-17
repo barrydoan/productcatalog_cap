@@ -15,12 +15,6 @@ service CartService {
    
 
     entity CartItems as SELECT from my.CartItems {
-        *,
-        product.shortId,
-        product.NDC,
-        product.name,
-        product.imageUrl,
-        product.retailPrice,
-        product.acqCost
+        *
     };
 }

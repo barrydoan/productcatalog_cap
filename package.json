@@ -54,7 +54,7 @@
       "db": {
         "kind": "hana",
         "credentials": {
-          "database": "productcatalog.db"
+          "database": "sqlite.db"
         }
       }
     },
