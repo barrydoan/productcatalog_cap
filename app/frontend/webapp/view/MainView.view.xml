@@ -67,21 +67,36 @@
                         <cells>  
                             <HBox alignItems="Center" justifyContent="SpaceBetween">
                                 <Image src="img/{imageUrl}" width="100px" height="100px"  class="sapUiSmallMargin"/>
-                                <VBox width="100%" direction="Column">
-                                    <Text text="{name}" />
-                                    <Text text="{NDC}" />
-                                    <Text text="{shortId}"/>
-                                    <Text text="{supplierName}"/>
+                                <VBox width="100%" height="100px" direction="Column" alignItems="Stretch">
+                                    <Text class="product-name" text="{name}" />
+                                    <Text text="{NDC} | {shortId}" />
                                     <tnt:InfoLabel id="il3" text="{stock}" renderMode="Narrow" colorScheme="7"/>
+                                    <Text text="{supplierName}"/>
                                 </VBox>
                             </HBox>
-                            <Text text="{form}"/>
-                            <Text text="{unitSize}"/>
-                            <Text text="${perDose}"/>
-                            <Text text="${rebate}"/>
-                            <Text text="${awp}"/>
-                            <Text text="${retailPrice}"/>
-                            <Text text="${acqCost}"/>
+                            <VBox height="100px">
+                                <Text text="{form}"/>
+                            </VBox>
+                            <VBox height="100px">
+                                <Text text="{unitSize}"/>
+                            </VBox>
+                            <VBox justifyContent="SpaceBetween">
+                                <HBox height="50px" justifyContent="End">
+                                    <Text width="8em" text="${perDose}"/>
+                                    <Text width="8em" text="${rebate}"/>
+                                    <Text width="8em" text="${awp}"/>
+                                    <Text width="8em" text="${retailPrice}"/>
+                                    <Text width="8em" text="${acqCost}"/>
+                                </HBox>
+                                <HBox height="50px" justifyContent="End">
+                                    <Input
+                                        type="Number"
+                                        placeholder="Enter a number"
+                                        class="sapUiSmallMarginBottom" />
+                                    <Button text="Add to Cart" />
+                                </HBox>
+                            </VBox>
+                            
                         </cells>
                     </ColumnListItem>
                 </items>
@@ -101,31 +116,17 @@
                             <Label text="UnitSize"/>
                         </header>
                     </Column>
-                    <Column  width="8em">
+                    <Column>
                         <header>
-                            <Label text="PerDose"/>
+                            <HBox width="100%" class="pricing-title-box">
+                                    <Label width="8em" text="Per Dose"/>
+                                    <Label width="8em" text="Rebate"/>
+                                    <Label width="8em" text="AWP"/>
+                                    <Label width="8em" text="Retail Price"/>
+                                    <Label width="8em" text="Acq. Cost"/>
+                            </HBox>
                         </header>
                     </Column >
-                    <Column width="8em">
-                        <header>
-                            <Label text="Rebate"/>
-                        </header>
-                    </Column>
-                    <Column width="8em">
-                        <header>
-                            <Label text="AWP"/>
-                        </header>
-                    </Column>
-                    <Column width="8em">
-                        <header>
-                            <Label text="Retail Price"/>
-                        </header>
-                    </Column>
-                    <Column width="8em">
-                        <header>
-                            <Label text="Acq Cost"/>
-                        </header>
-                    </Column>
                 </columns>
             </Table>
         </semantic:content>

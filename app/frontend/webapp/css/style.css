@@ -1,1 +1,9 @@
 /* Enter your custom styles here */
+.product-name {
+    color: #3C289B !important;
+    font-weight: bold !important;
+}
+
+.pricing-title-box {
+    justify-content: flex-end !important;
+}
