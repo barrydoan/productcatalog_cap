@@ -7,3 +7,7 @@
 .pricing-title-box {
     justify-content: flex-end !important;
 }
+
+.hiden-field {
+    visibility: hidden;
+}

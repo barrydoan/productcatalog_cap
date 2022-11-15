@@ -230,6 +230,16 @@ sap.ui.define([
             } else if (comboBoxValue === "") {
                 oBinding.filter([]);
             }
+        },
+
+        onAddToCart: function (eEvent) {
+            console.log(eEvent);
+            var button = eEvent.getSource();
+            console.log(button.oParent)
+            var productId = jQuery.sap.byId(button.oParent.sId).find("[name='productId']").val();
+            var productQuantity = jQuery.sap.byId(button.oParent.sId).find("[name='productQuantity']").val();
+            console.log(productId);
+            console.log(productQuantity);
         }
 
     });
