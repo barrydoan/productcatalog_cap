@@ -6,6 +6,12 @@
     xmlns:semantic="sap.f.semantic"
 	controllerName="frontend.controller.MainView" 
 	displayBlock="true">
+    <OverflowToolbar>
+		<Button
+			text="Product"/>
+		<Button
+			text="Cart"/>
+	</OverflowToolbar>
     <semantic:SemanticPage
         id="page"
         headerPinnable="false"
