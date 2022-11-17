@@ -23,7 +23,7 @@
 
         <!-- Custom Title Icon Content-->
 		<semantic:titleCustomIconActions>
-			<OverflowToolbarButton icon="sap-icon://cart" text="cart" />
+			<Button icon="sap-icon://cart" text="{baseModel>/cartInfo/cardNo}" press=".onCartClicked"/>
 		</semantic:titleCustomIconActions>
 
         <semantic:content>

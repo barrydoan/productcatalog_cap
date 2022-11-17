@@ -24,7 +24,7 @@ sap.ui.define([
          * @public
          */
         onInit: function () {
-
+            this.onBaseInit();
             this._mViewSettingsDialogs = {};
             var oViewModel,
                 iOriginalBusyDelay,
@@ -265,9 +265,9 @@ sap.ui.define([
                 error: function(error) {
                     // your error logic
                 }
-            });
-            
-        }
+            }); 
+        },
+        
 
     });
 
