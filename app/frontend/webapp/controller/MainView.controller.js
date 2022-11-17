@@ -6,8 +6,9 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     'sap/ui/core/Fragment',
     'sap/ui/Device',
-    'sap/ui/model/Sorter'
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment, Device, Sorter) {
+    'sap/ui/model/Sorter',
+    'sap/ui/model/odata/v4/ODataModel'
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment, Device, Sorter, ODataModel) {
     "use strict";
 
     return BaseController.extend("frontend.controller.controller.MainView", {
@@ -54,6 +55,17 @@ sap.ui.define([
                 // Restore original busy indicator delay for worklist's table
                 oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
             });
+
+            var origin = window.location.origin;
+            console.log("origin", origin);
+            this._oDataModel = new ODataModel({
+                groupId : "$direct",
+                synchronizationMode : "None",
+                serviceUrl : "cart/"
+            })
+            console.log("oDataModel", this._oDataModel);
+            
+            
         },
 
         /* =========================================================== */
@@ -240,6 +252,21 @@ sap.ui.define([
             var productQuantity = jQuery.sap.byId(button.oParent.sId).find("[name='productQuantity']").val();
             console.log(productId);
             console.log(productQuantity);
+            
+            console.log(jQuery.sap)
+
+            var origin = window.location.origin;
+            
+            jQuery.get({
+                url: origin + "/cart/Carts",
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function(error) {
+                    // your error logic
+                }
+            });
+            
         }
 
     });

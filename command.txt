@@ -22,3 +22,5 @@ mbt build
 cf deploy mta_archives/mytravelrequest_cap_1.0.0.mtr
 #check the application
 cf apps 
+# run project for testing with hana database
+cds watch --profile hybrid

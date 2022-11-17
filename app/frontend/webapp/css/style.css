@@ -11,3 +11,7 @@
 .hiden-field {
     visibility: hidden;
 }
+
+.toolbar {
+    justify-content: flex-end !important;
+}

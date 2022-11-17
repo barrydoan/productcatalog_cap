@@ -12,10 +12,19 @@
         toggleHeaderOnTitleClick="false">
 
         <semantic:titleHeading>
-            <Title
-                text="Product catalog"
-                level="H2"/>
+            <Title text="Product List" />
         </semantic:titleHeading>
+
+        <semantic:titleBreadcrumbs>
+			<Breadcrumbs>
+				<Link text="Product List" />
+			</Breadcrumbs>
+		</semantic:titleBreadcrumbs>
+
+        <!-- Custom Title Icon Content-->
+		<semantic:titleCustomIconActions>
+			<OverflowToolbarButton icon="sap-icon://cart" text="cart" />
+		</semantic:titleCustomIconActions>
 
         <semantic:content>
             <Table noDataText="No data" id="table" 
@@ -138,10 +147,5 @@
                 </columns>
             </Table>
         </semantic:content>
-
-        <semantic:sendEmailAction>
-            <semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
-        </semantic:sendEmailAction>
-
     </semantic:SemanticPage>
 </mvc:View>
