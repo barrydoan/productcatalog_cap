@@ -256,16 +256,33 @@ sap.ui.define([
             console.log(jQuery.sap)
 
             var origin = window.location.origin;
+
+            var baseModel = this.getModel("baseModel");
+            var cartInfo = baseModel.oData.cartInfo;
+            var data = 
+            {
+                "parent_ID": cartInfo.ID,
+                "product_ID": parseInt(productId)
+            }
+            console.log("data", data);
             
-            jQuery.get({
-                url: origin + "/cart/Carts",
-                success: function(data) {
-                    console.log(data);
-                },
-                error: function(error) {
-                    // your error logic
-                }
-            }); 
+            if (cartInfo.ID == "") {
+                alert("Please select cart");
+            }
+            else {
+                jQuery.ajax(
+                    origin + "/cart/CartItems",
+                    {
+                        data:  JSON.stringify(data),
+                        contentType : 'application/json',
+                        type : 'POST'
+                    }
+                ); 
+            }
+
+           
+
+            
         },
         
 
