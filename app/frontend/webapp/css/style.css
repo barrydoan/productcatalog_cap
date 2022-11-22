@@ -15,3 +15,8 @@
 .toolbar {
     justify-content: flex-end !important;
 }
+
+.quantity {
+    padding: 0 5px;
+    width: 10px;
+}

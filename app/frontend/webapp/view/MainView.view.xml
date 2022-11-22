@@ -6,12 +6,6 @@
     xmlns:semantic="sap.f.semantic"
 	controllerName="frontend.controller.MainView" 
 	displayBlock="true">
-    <OverflowToolbar>
-		<Button
-			text="Product"/>
-		<Button
-			text="Cart"/>
-	</OverflowToolbar>
     <semantic:SemanticPage
         id="page"
         headerPinnable="false"
@@ -28,9 +22,17 @@
 		</semantic:titleBreadcrumbs>
 
         <!-- Custom Title Icon Content-->
-		<semantic:titleCustomIconActions>
-			<Button icon="sap-icon://cart" text="{baseModel>/cartInfo/cardNo}" press=".onCartClicked"/>
-		</semantic:titleCustomIconActions>
+        <semantic:titleCustomIconActions>
+            <MenuButton icon="sap-icon://cart" text="{baseModel>/cartInfo/cardNo}">
+                <menu>
+                    <Menu>
+                        <MenuItem text="Select cart" icon="sap-icon://cart-approval" press=".onCartClicked"/>
+                        <MenuItem text="Edit" icon="sap-icon://edit" press="onPress" />
+                        <MenuItem text="Manage" icon="sap-icon://action-settings" press="onPress" />
+                    </Menu>
+                </menu>
+            </MenuButton>
+        </semantic:titleCustomIconActions>
 
         <semantic:content>
             <Table noDataText="No data" id="table" 
@@ -112,10 +114,12 @@
                                      />
                                     <Input
                                         name="productQuantity"
+                                        class="quantity"
                                         type="Number"
                                         placeholder="Enter a number"
                                         value="1"
-                                        class="sapUiSmallMarginBottom" />
+                                        
+                                    />
                                     <Button text="Add to Cart" press=".onAddToCart" />
                                 </HBox>
                             </VBox>
