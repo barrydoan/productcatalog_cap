@@ -17,7 +17,8 @@
 
         <semantic:titleBreadcrumbs>
 			<Breadcrumbs>
-				<Link text="Product List" />
+				<Link href="#/" text="Home" />
+                <Link href="#/" text="Product List" />
 			</Breadcrumbs>
 		</semantic:titleBreadcrumbs>
 
