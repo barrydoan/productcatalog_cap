@@ -2,9 +2,10 @@
 	xmlns:mvc="sap.ui.core.mvc" 
     xmlns:core="sap.ui.core"
 	xmlns="sap.m" 
+    xmlns:layout="sap.ui.layout"
 	xmlns:tnt="sap.tnt" 
     xmlns:semantic="sap.f.semantic"
-	controllerName="frontend.controller.CartView" 
+	controllerName="frontend.controller.CartDetailView" 
 	displayBlock="true">
     <semantic:SemanticPage
         id="page"
@@ -33,42 +34,47 @@
                     </Menu>
                 </menu>
             </MenuButton>
-        </semantic:titleCustomIconActions>
+        </semantic:titleCustomIconActions><semantic:headerContent>
+			<layout:HorizontalLayout allowWrapping="true">
+				<layout:VerticalLayout class="sapUiMediumMarginEnd">
+					<ObjectAttribute title="CartId" text="{cartDetailModel>/ID}"/>
+					<ObjectAttribute title="CartNo" text="{cartDetailModel>/CardNo}"/>
+					<ObjectAttribute title="Total" text="{cartDetailModel>/total}"/>
+				</layout:VerticalLayout>
+			</layout:HorizontalLayout>
+		</semantic:headerContent>
+
+
 
         <semantic:content>
             <Table noDataText="No data" id="table" 
-                items="{      
-                    path: '/Carts',     
-                    sorter: {       
-                        path: 'CardNo'      
-                    }
-                    }"
+                items="{ path: 'cartDetailModel>/Items' }"
                 growing="true"
                 growingScrollToLoad="true">
                 
                 <items >
                     <ColumnListItem type="Active" id="item0" press=".showCartDetail">
                         <cells>  
-                            <Text text="{ID}"/>
-                            <Text text="{CardNo}"/>
-                            <Text text="{total}"/>
+                            <Text text="{cartDetailModel>product_ID}"/>
+                            <Text text="{cartDetailModel>amount}"/>
+                            <Text text="{cartDetailModel>netAmount}"/>
                         </cells>
                     </ColumnListItem>
                 </items>
                 <columns>
                     <Column>
                         <header>
-                            <Label text="ID"/>
+                            <Label text="ProductId"/>
                         </header>
                     </Column>
                     <Column>
                         <header>
-                            <Label text="CartNo"/>
+                            <Label text="Quantity"/>
                         </header>
                     </Column>
                     <Column>
                         <header>
-                            <Label text="Total"/>
+                            <Label text="Amount"/>
                         </header>
                     </Column>
                 </columns>

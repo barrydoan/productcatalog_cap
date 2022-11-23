@@ -11,7 +11,7 @@ sap.ui.define([
 ], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment, Device, Sorter, ODataModel) {
     "use strict";
 
-    return BaseController.extend("frontend.controller.controller.MainView", {
+    return BaseController.extend("frontend.controller.MainView", {
 
         formatter: formatter,
 

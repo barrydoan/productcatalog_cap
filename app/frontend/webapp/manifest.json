@@ -111,6 +111,13 @@
                     "target": [
                         "TargetCartView"
                     ]
+                },
+                {
+                    "name": "RouteCartDetailView",
+                    "pattern": "cartdetail/{cartId}",
+                    "target": [
+                        "TargetCartDetailView"
+                    ]
                 }
             ],
             "targets": {
@@ -127,6 +134,13 @@
                     "clearControlAggregation": false,
                     "viewId": "CartView",
                     "viewName": "CartView"
+                },
+                "TargetCartDetailView": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "CartDetailView",
+                    "viewName": "CartDetailView"
                 }
             }
         },

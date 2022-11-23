@@ -24,10 +24,21 @@ sap.ui.define([
          * @public
          */
         onInit: function () {
-            
-            
-            
+            var table = this.byId("table");
+            console.log("table", table)
         },
+
+        showCartDetail: function(oEvent) {
+            var source = oEvent.getSource();
+            var context = source.getBindingContext();
+            var cartId = context.getProperty("ID");
+            console.log("id", cartId);
+            // navigate to cart detail page
+            this.getRouter().navTo("RouteCartDetailView", {
+                cartId: cartId
+            });
+            
+        }
     });
 
 });

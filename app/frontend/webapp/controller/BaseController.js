@@ -7,7 +7,7 @@ sap.ui.define([
 ], function (Controller, UIComponent, mobileLibrary, Fragment, JSONModel) {
     "use strict";
 
-    return Controller.extend("frontend.controller.controller.BaseController", {
+    return Controller.extend("frontend.controller.BaseController", {
         /**
          * Convenience method for accessing the router.
          * @public
