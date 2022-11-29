@@ -76,8 +76,13 @@
                             <Text text="{cartItemsModel>netAmount}"/>
                             <Input type="Number" width="1em" value="{cartItemsModel>amount}"/>
                             <HBox>
-                                <Button icon="sap-icon://accept" type="Transparent" press="onPress"/>
-                                <Button icon="sap-icon://delete" type="Transparent" press="onPress"/>
+                                <Input
+                                        class="hiden-field"
+                                        name="cartItemId"
+                                        value="{cartItemsModel>ID}"
+                                     />
+                                <Button icon="sap-icon://accept" type="Transparent" press=".onEditClicked"/>
+                                <Button icon="sap-icon://delete" type="Transparent" press=".onDeleteClicked"/>
                             </HBox>
                         </cells>
                     </ColumnListItem>

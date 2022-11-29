@@ -38,6 +38,8 @@ sap.ui.define([
 
             var table = this.byId("table");
 
+            this.cartId = '';
+
 
             
             
@@ -50,14 +52,14 @@ sap.ui.define([
 
         _attachPatternMatched: function(oEvent) {
             console.log("oEvent", oEvent);
-            var cartId = oEvent.getParameters().arguments.cartId;
-            console.log("cartId", cartId);
+            this.cartId = oEvent.getParameters().arguments.cartId;
+            console.log("cartId", this.cartId);
             var a = this.getView();
             console.log("view", a);
             var that = this;
             // get cart detail
             jQuery.ajax(
-                origin + "/cart/Carts(" + cartId + ")?&$expand=Items",
+                origin + "/cart/Carts(" + this.cartId + ")?&$expand=Items",
                 {
                     contentType : 'application/json',
                     type : 'GET',
@@ -73,6 +75,35 @@ sap.ui.define([
                 
             ); 
             // get cart item
+            this.getCartItem(this.cartId);
+        },
+
+        onDeleteClicked: function(oEvent) {
+            var button = oEvent.getSource();
+            console.log(button.oParent)
+            var cartItemId = jQuery.sap.byId(button.oParent.sId).find("[name='cartItemId']").val();
+            console.log("cartItemId", cartItemId);
+            var that = this;
+            jQuery.ajax(
+                origin + "/cart/CartItems(" + cartItemId + ")",
+                {
+                    contentType : 'application/json',
+                    type : 'DELETE',
+                    success: function () {
+                        // update cart items
+                        that.getCartItem(that.cartId);
+                    }
+                },
+                
+            ); 
+        },
+
+        onEditClicked: function(oEvent) {
+            
+        },
+
+        getCartItem: function(cartId) {
+            var that = this;
             jQuery.ajax(
                 origin + "/cart/CartItems?$filter=parent_ID eq " + cartId + "&$expand=product",
                 {
@@ -86,7 +117,7 @@ sap.ui.define([
                 },
                 
             ); 
-        },
+        }
         
     });
 
