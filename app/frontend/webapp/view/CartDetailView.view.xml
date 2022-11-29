@@ -5,6 +5,8 @@
     xmlns:layout="sap.ui.layout"
 	xmlns:tnt="sap.tnt" 
     xmlns:semantic="sap.f.semantic"
+    xmlns:m="sap.m"
+    xmlns:c="sap.ui.core"
 	controllerName="frontend.controller.CartDetailView" 
 	displayBlock="true">
     <semantic:SemanticPage
@@ -20,6 +22,7 @@
 			<Breadcrumbs>
 				<Link href="#/" text="Home" />
                 <Link href="#/carts" text="Cart List" />
+                <Link href="#/cartdetail" text="Cart Detail" />
 			</Breadcrumbs>
 		</semantic:titleBreadcrumbs>
 
@@ -48,23 +51,46 @@
 
         <semantic:content>
             <Table noDataText="No data" id="table" 
-                items="{ path: 'cartDetailModel>/Items' }"
+                items="{ path: 'cartItemsModel>/value' }"
                 growing="true"
                 growingScrollToLoad="true">
-                
+                <headerToolbar>
+                    <Toolbar>
+                        <Title id="tableHeader"
+                            text="Products" />
+                        <ToolbarSpacer />
+                        
+                    </Toolbar>
+                </headerToolbar>
                 <items >
                     <ColumnListItem type="Active" id="item0" press=".showCartDetail">
                         <cells>  
-                            <Text text="{cartDetailModel>product_ID}"/>
-                            <Text text="{cartDetailModel>amount}"/>
-                            <Text text="{cartDetailModel>netAmount}"/>
+                            <HBox >
+                                <Image src="img/{cartItemsModel>product/imageUrl}" width="50px" height="50px" />
+                                <VBox>
+                                    <Text text="{cartItemsModel>product/name}"/>
+                                    <Text text="{cartItemsModel>product/shortId}"/>
+                                    <Text text="{cartItemsModel>product/NDC}"/>
+                                </VBox>
+                            </HBox>
+                            <Text text="{cartItemsModel>netAmount}"/>
+                            <Input type="Number" width="1em" value="{cartItemsModel>amount}"/>
+                            <HBox>
+                                <Button icon="sap-icon://accept" type="Transparent" press="onPress"/>
+                                <Button icon="sap-icon://delete" type="Transparent" press="onPress"/>
+                            </HBox>
                         </cells>
                     </ColumnListItem>
                 </items>
                 <columns>
                     <Column>
                         <header>
-                            <Label text="ProductId"/>
+                            <Label text="Description"/>
+                        </header>
+                    </Column>
+                    <Column>
+                        <header>
+                            <Label text="Price"/>
                         </header>
                     </Column>
                     <Column>
@@ -74,9 +100,10 @@
                     </Column>
                     <Column>
                         <header>
-                            <Label text="Amount"/>
+                            <Label text="Action"/>
                         </header>
                     </Column>
+
                 </columns>
             </Table>
         </semantic:content>
