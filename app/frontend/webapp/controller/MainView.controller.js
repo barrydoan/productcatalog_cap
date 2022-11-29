@@ -117,6 +117,7 @@ sap.ui.define([
         },
 
 
+
         onSearch: function (oEvent) {
             if (oEvent.getParameters().refreshButtonPressed) {
                 // Search field's 'refresh' button has been pressed.

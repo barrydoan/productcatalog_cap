@@ -81,6 +81,14 @@ sap.ui.define([
 			}.bind(this));
         },
 
+        onEditClicked: function (oEvent) {
+            
+        },
+
+        onManageClicked: function (oEvent) {
+            this.getRouter().navTo("RouteCartView");
+        },
+
         _configDialog: function (oDialog) {
             oDialog.setRememberSelections(true);
         },
