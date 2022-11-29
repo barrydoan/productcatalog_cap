@@ -74,14 +74,26 @@
                                 </VBox>
                             </HBox>
                             <Text text="{cartItemsModel>netAmount}"/>
-                            <Input type="Number" width="1em" value="{cartItemsModel>amount}"/>
                             <HBox>
+                                <Input
+                                        class="hiden-field"
+                                        name="productId"
+                                        value="{cartItemsModel>product_ID}"
+                                     />
+                                <Input
+                                        class="hiden-field"
+                                        name="parentId"
+                                        value="{cartItemsModel>parent_ID}"
+                                     />
+                                <Input type="Number" name="quantity" value="{cartItemsModel>amount}"/>
+                                <Button width="1em" icon="sap-icon://accept" type="Transparent" press=".onEditClicked"/>
+                            </HBox>
+                            <HBox name="action">
                                 <Input
                                         class="hiden-field"
                                         name="cartItemId"
                                         value="{cartItemsModel>ID}"
                                      />
-                                <Button icon="sap-icon://accept" type="Transparent" press=".onEditClicked"/>
                                 <Button icon="sap-icon://delete" type="Transparent" press=".onDeleteClicked"/>
                             </HBox>
                         </cells>

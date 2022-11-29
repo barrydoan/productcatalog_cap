@@ -99,7 +99,34 @@ sap.ui.define([
         },
 
         onEditClicked: function(oEvent) {
-            
+            var button = oEvent.getSource();
+            console.log(button.oParent)
+            var cartItemId = jQuery.sap.byId(button.oParent.sId).find("[name='cartItemId']").val();
+            console.log("cartItemId", cartItemId);
+            var parentId = jQuery.sap.byId(button.oParent.sId).find("[name='parentId']").val();
+            console.log("parentId", parentId);
+            var productId = jQuery.sap.byId(button.oParent.sId).find("[name='productId']").val();
+            console.log("productId", productId);
+            var quantity = jQuery.sap.byId(button.oParent.oParent.sId).find("[name='quantity']").val();
+            console.log("quantity", quantity);
+            var that = this;
+            if (quantity > 0) {
+                var data = 
+                {
+                    "parent_ID": parentId,
+                    "product_ID": productId,
+                    "amount": quantity
+                }
+                // update quantity
+                jQuery.ajax(
+                    origin + "/cart/CartItems/" + cartItemId,
+                    {
+                        data:  JSON.stringify(data),
+                        contentType : 'application/json',
+                        type : 'PUT'
+                    }
+                ); 
+            }
         },
 
         getCartItem: function(cartId) {
