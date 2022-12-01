@@ -38,6 +38,67 @@ sap.ui.define([
                 cartId: cartId
             });
             
+        },
+        onCreateClicked: function(oEvent) {
+            var view = this.getView();
+            var date = new Date();
+            var formatedDate = date.getFullYear() + "-" + (date.getMonth() < 8 ? "0" + date.getMonth(): date.getMonth()) + "-" + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate()));
+            var newCartModel = new JSONModel({
+                cartNo:formatedDate,
+                total: 0.00
+            })
+            if (!this.createCartDialog) {
+                this.createCartDialog = Fragment.load({
+					id: "createCartDialog",
+                    name: "frontend.view.CreateCartDialog",
+					controller: this
+				})
+            }
+            this.createCartDialog.then(function(oDialog) {
+                console.log("dialog", oDialog);
+                oDialog.setModel(newCartModel)
+                var model = oDialog.getModel();
+                console.log("model", model)
+				oDialog.open();
+			});
+
+        },
+        onDialogClose: function (oEvent) {
+			
+			console.log("dialog close");
+            
+		},
+        onDialogCancelClicked: function(oEvent) {
+            this.createCartDialog.then(function(oDialog) {
+                oDialog.close();
+            })
+        },
+        onRefresh: function () {
+            var oTable = this.byId("table");
+            oTable.getBinding("items").refresh();
+        },
+        onDialogOkClicked: function(oEvent) {
+            var that = this;
+            this.createCartDialog.then(function(oDialog) {
+                console.log("oData", oDialog.getModel().oData);
+                var data = {
+                    "CardNo": oDialog.getModel().oData.cartNo,
+                    "total": oDialog.getModel().oData.total
+                }
+                // create new cart
+                jQuery.ajax(
+                    "/cart/Carts",
+                    {
+                        data:  JSON.stringify(data),
+                        contentType : 'application/json',
+                        type : 'POST',
+                        success: function(data) {
+                            that.onRefresh();
+                            oDialog.close();
+                        }
+                    }
+                ); 
+            });
         }
     });
 
