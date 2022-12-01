@@ -122,6 +122,27 @@ sap.ui.define([
             }
         },
 
+        onEditCartNoClicked: function(oEvent) {
+            var button = oEvent.getSource();
+            var cartNo = jQuery.sap.byId(button.oParent.sId).find("[name='cartNo']").val();
+            var that = this;
+            var data = {
+                "ID": this.cartId,
+                "CardNo": cartNo
+            }
+            jQuery.ajax(
+                origin + "/cart/Carts/" + this.cartId,
+                {
+                    contentType : 'application/json',
+                    type : 'PUT',
+                    data: JSON.stringify(data),
+                    success: function(data) {
+                        that.getCartDetail(that.cartId)
+                    }
+                },
+            ); 
+        },
+
         getCartItem: function(cartId) {
             var that = this;
             jQuery.ajax(

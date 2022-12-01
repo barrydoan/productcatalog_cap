@@ -1,4 +1,4 @@
-<mvc:View 
+<mvc:View xmlns:form="sap.ui.layout.form" 
 	xmlns:mvc="sap.ui.core.mvc" 
     xmlns:core="sap.ui.core"
 	xmlns="sap.m" 
@@ -6,6 +6,7 @@
 	xmlns:tnt="sap.tnt" 
     xmlns:semantic="sap.f.semantic"
     xmlns:m="sap.m"
+    xmlns:u="sap.ui.unified"
     xmlns:c="sap.ui.core"
 	controllerName="frontend.controller.CartDetailView" 
 	displayBlock="true">
@@ -38,12 +39,21 @@
                 </menu>
             </MenuButton>
         </semantic:titleCustomIconActions><semantic:headerContent>
-			<layout:HorizontalLayout allowWrapping="true">
-				<layout:VerticalLayout class="sapUiMediumMarginEnd">
-					<ObjectAttribute title="CartId" text="{cartDetailModel>/ID}"/>
-					<ObjectAttribute title="CartNo" text="{cartDetailModel>/CardNo}"/>
-					<ObjectAttribute title="Total" text="{cartDetailModel>/total}"/>
-				</layout:VerticalLayout>
+			<layout:HorizontalLayout>
+                <form:SimpleForm 
+                    id="simpleform"
+                    layout="ResponsiveGridLayout" 
+                    editable="true" >
+                    <Label displayOnly="true" text="CartId" />
+                    <Input editable="false" name="cartId" type="Text" value="{cartDetailModel>/ID}" />
+                    <Label displayOnly="true" text="Cart No" />
+                    <HBox >
+                        <Input type="Text" name="cartNo" value="{cartDetailModel>/CardNo}" />
+                        <Button icon="sap-icon://accept" type="Transparent" press=".onEditCartNoClicked"/>
+                    </HBox>
+                    <Label displayOnly="true" text="Total" />
+                    <u:Currency value="{cartDetailModel>/total}" currency="USD" useSymbol="false"/>
+                </form:SimpleForm>
 			</layout:HorizontalLayout>
 		</semantic:headerContent>
 
@@ -73,7 +83,9 @@
                                     <Text text="{cartItemsModel>product/NDC}"/>
                                 </VBox>
                             </HBox>
-                            <Text text="{cartItemsModel>netAmount}"/>
+                            <u:Currency
+						        value="{cartItemsModel>netAmount}" 
+                                currency="USD" maxPrecision="2" useSymbol="false"/>
                             <HBox>
                                 <Input
                                         class="hiden-field"
@@ -88,7 +100,7 @@
                                 <Input type="Number" name="quantity" value="{cartItemsModel>amount}"/>
                                 <Button width="1em" icon="sap-icon://accept" type="Transparent" press=".onEditClicked"/>
                             </HBox>
-                            <HBox name="action">
+                            <HBox name="action" justifyContent="End">
                                 <Input
                                         class="hiden-field"
                                         name="cartItemId"
@@ -105,17 +117,17 @@
                             <Label text="Description"/>
                         </header>
                     </Column>
-                    <Column>
+                    <Column hAlign="End">
                         <header>
                             <Label text="Price"/>
                         </header>
                     </Column>
-                    <Column>
+                    <Column hAlign="End">
                         <header>
                             <Label text="Quantity"/>
                         </header>
                     </Column>
-                    <Column>
+                    <Column hAlign="End">
                         <header>
                             <Label text="Action"/>
                         </header>
