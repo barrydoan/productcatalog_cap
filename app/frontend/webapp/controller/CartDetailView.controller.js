@@ -58,22 +58,7 @@ sap.ui.define([
             console.log("view", a);
             var that = this;
             // get cart detail
-            jQuery.ajax(
-                origin + "/cart/Carts(" + this.cartId + ")?&$expand=Items",
-                {
-                    contentType : 'application/json',
-                    type : 'GET',
-                    success: function (data) {
-                        var cartDetailModel = new JSONModel(data);
-                        console.log("cartDetaiModel", cartDetailModel);
-                        that.setModel(cartDetailModel, "cartDetailModel");
-                        // get detail of product
-                        var items = data.Items;
-                        console.log("items", items);
-                    }
-                },
-                
-            ); 
+            this.getCartDetail(this.cartId);
             // get cart item
             this.getCartItem(this.cartId);
         },
@@ -92,6 +77,8 @@ sap.ui.define([
                     success: function () {
                         // update cart items
                         that.getCartItem(that.cartId);
+                        // update cart detail
+                        that.getCartDetail(that.cartId);
                     }
                 },
                 
@@ -101,7 +88,7 @@ sap.ui.define([
         onEditClicked: function(oEvent) {
             var button = oEvent.getSource();
             console.log(button.oParent)
-            var cartItemId = jQuery.sap.byId(button.oParent.sId).find("[name='cartItemId']").val();
+            var cartItemId = jQuery.sap.byId(button.oParent.oParent.sId).find("[name='cartItemId']").val();
             console.log("cartItemId", cartItemId);
             var parentId = jQuery.sap.byId(button.oParent.sId).find("[name='parentId']").val();
             console.log("parentId", parentId);
@@ -114,8 +101,8 @@ sap.ui.define([
                 var data = 
                 {
                     "parent_ID": parentId,
-                    "product_ID": productId,
-                    "amount": quantity
+                    "product_ID":  parseInt(productId),
+                    "amount": parseInt(quantity)
                 }
                 // update quantity
                 jQuery.ajax(
@@ -123,7 +110,13 @@ sap.ui.define([
                     {
                         data:  JSON.stringify(data),
                         contentType : 'application/json',
-                        type : 'PUT'
+                        type : 'PUT',
+                        success: function () {
+                            // update cart items
+                            that.getCartItem(that.cartId);
+                            // update cart detail
+                            that.getCartDetail(that.cartId);
+                        }
                     }
                 ); 
             }
@@ -140,6 +133,26 @@ sap.ui.define([
                         var cartItemsModel = new JSONModel(data);
                         that.setModel(cartItemsModel, "cartItemsModel");
                         console.log("cartItemsModel", cartItemsModel);
+                    }
+                },
+                
+            ); 
+        },
+
+        getCartDetail: function(cartId) {
+            var that = this;
+            jQuery.ajax(
+                origin + "/cart/Carts(" + this.cartId + ")?&$expand=Items",
+                {
+                    contentType : 'application/json',
+                    type : 'GET',
+                    success: function (data) {
+                        var cartDetailModel = new JSONModel(data);
+                        console.log("cartDetaiModel", cartDetailModel);
+                        that.setModel(cartDetailModel, "cartDetailModel");
+                        // get detail of product
+                        var items = data.Items;
+                        console.log("items", items);
                     }
                 },
                 
