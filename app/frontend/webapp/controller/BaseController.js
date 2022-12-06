@@ -66,8 +66,8 @@ sap.ui.define([
 				oView = this.getView();
             if (!this._pDialog) {
 				this._pDialog = Fragment.load({
-					id: "CartDialog",
-                    name: "frontend.view.CartDialog",
+					id: "cartSelectionDialog",
+                    name: "frontend.view.CartSelectionDialog",
 					controller: this
 				}).then(function (oDialog){
 					oDialog.setModel(oView.getModel());
@@ -76,7 +76,6 @@ sap.ui.define([
 			}
 
 			this._pDialog.then(function(oDialog){
-                this._configDialog(oDialog)
 				oDialog.open();
 			}.bind(this));
         },
@@ -89,28 +88,35 @@ sap.ui.define([
             this.getRouter().navTo("RouteCartView");
         },
 
-        _configDialog: function (oDialog) {
-            oDialog.setRememberSelections(true);
-        },
+        onCartItemClicked: function (oEvent) {
 
-        onDialogClose: function (oEvent) {
-			
-			var source = oEvent.getSource();
-            var mProperties = source._oSelectedItem.mProperties;
-            console.log("source", mProperties);
+            var item =  oEvent.getSource().getSelectedItem();
+            var object = item.getBindingContext().getObject();
+            console.log("item", item);
+            console.log("object", object);
+            // set to base model
             var baseModel = new JSONModel({
                 cartInfo: {
-                    ID: mProperties.description,
-                    cardNo: mProperties.title,
-                    total: mProperties.info
+                    ID: object.ID,
+                    cardNo: object.CardNo,
+                    total: object.total
                 }
             });
             this.setModel(baseModel, "baseModel");
-            
-		},
+        },
 
-        
 
+        onDialogCancelClicked: function(oEvent) {
+            this._pDialog.then(function(oDialog) {
+                oDialog.close();
+            })
+        },
+
+        onDialogOkClicked: function(oEvent) {
+            this._pDialog.then(function(oDialog) {
+                oDialog.close();
+            })
+        }
     });
 
 });
