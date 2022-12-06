@@ -55,8 +55,8 @@
                     <ColumnListItem type="Active" id="item0" press=".showCartDetail">
                         <cells>  
                             <HBox >
-                                <Input type="text" value="{CardNo}"/>
-                                <Button icon="sap-icon://accept" type="Transparent" press=".onDeleteClicked"/>
+                                <Input name="cartNo" type="text" value="{CardNo}"/>
+                                <Button icon="sap-icon://accept" type="Transparent" press=".onAcceptClicked"/>
                             </HBox>
                             <u:Currency
 						        value="{total}" 
@@ -64,7 +64,7 @@
                             <HBox name="action" justifyContent="End">
                                 <Input
                                         class="hiden-field"
-                                        name="cartItemId"
+                                        name="cartId"
                                         value="{ID}"
                                      />
                                 <Button icon="sap-icon://delete" type="Transparent" press=".onDeleteClicked"/>

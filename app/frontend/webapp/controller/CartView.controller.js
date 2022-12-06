@@ -98,14 +98,38 @@ sap.ui.define([
         onDeleteClicked: function(oEvent) {
             var button = oEvent.getSource();
             console.log(button.oParent)
-            var cartId = jQuery.sap.byId(button.oParent.sId).find("[name='cartItemId']").val();
+            var cartId = jQuery.sap.byId(button.oParent.sId).find("[name='cartId']").val();
             console.log("cartId", cartId);
             var that = this;
             jQuery.ajax(
-                origin + "/cart/Carts(" + cartId + ")",
+                "/cart/Carts(" + cartId + ")",
                 {
                     contentType : 'application/json',
                     type : 'DELETE',
+                    success: function () {
+                        that.onRefresh();
+                    }
+                },
+            ); 
+        },
+        onAcceptClicked: function(oEvent) {
+            var button = oEvent.getSource();
+            var cartId = jQuery.sap.byId(button.oParent.oParent.sId).find("[name='cartId']").val();
+            console.log("cartId", cartId);
+            var cartNo = jQuery.sap.byId(button.oParent.sId).find("[name='cartNo']").val();
+            console.log("cartNo", cartNo);
+            // update cart
+            var data = {
+                "ID": cartId,
+                "cardNo": cartNo
+            }
+            var that = this;
+            jQuery.ajax(
+                "/cart/Carts(" + cartId + ")",
+                {
+                    contentType : 'application/json',
+                    data: JSON.stringify(data),
+                    type : 'PUT',
                     success: function () {
                         that.onRefresh();
                     }
