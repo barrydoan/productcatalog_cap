@@ -49,14 +49,40 @@ sap.ui.define([
         },
 
         onBaseInit: function() {
-            var baseModel = new JSONModel({
-                cartInfo: {
-                    ID: "",
-                    cardNo: "Select cart",
-                    total: ""
-                }
-            });
-            this.setModel(baseModel, "baseModel");
+            this._oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+            var that = this;
+            // get the data from the local store
+            var cartInfoValue = this._oStorage.get("baseModel");
+            console.log("cartInforVlaue", cartInfoValue);
+            if (cartInfoValue) {
+                var cartInfo = JSON.parse(cartInfoValue);
+                jQuery.ajax(
+                    "/cart/Carts(" + cartInfo.ID + ")",
+                    {
+                        contentType : 'application/json',
+                        type : 'GET',
+                        success: function() {
+                            var baseModel = new JSONModel({
+                                cartInfo: cartInfo
+                            });
+                            that.setModel(baseModel, "baseModel");
+                        }
+                    }
+                ); 
+
+                
+            }
+            else {
+                var baseModel = new JSONModel({
+                    cartInfo: {
+                        ID: "",
+                        cardNo: "Select cart",
+                        total: ""
+                    }
+                });
+                this.setModel(baseModel, "baseModel");
+            }
+
             console.log("onInit work");
         },
 
@@ -65,18 +91,45 @@ sap.ui.define([
             var oButton = oEvent.getSource(),
 				oView = this.getView();
             if (!this._pDialog) {
+                var that = this;
 				this._pDialog = Fragment.load({
 					id: "cartSelectionDialog",
                     name: "frontend.view.CartSelectionDialog",
 					controller: this
 				}).then(function (oDialog){
+                    // open dialog
 					oDialog.setModel(oView.getModel());
+                    that._table = oDialog.getContent()[0]
 					return oDialog;
 				});
 			}
 
 			this._pDialog.then(function(oDialog){
+                var that = this;
+                oDialog.attachAfterOpen(function() {
+                    var baseModel = that.getModel("baseModel");
+                    var cartInfo = baseModel.oData.cartInfo;
+                    // set selected item back to table
+                    if (cartInfo.ID != "") {
+                        var items = that._table.getItems()
+                        console.log("items", items);
+                        for (var i = 0; i < items.length; i++) {
+                            var obj = items[i].getBindingContext().getObject();
+                            if (obj.ID == cartInfo.ID) {
+                                // set selected row for table
+                                console.log("set selected row here");
+                                console.log("selectedItem", items[i]);
+                                that._table.setSelectedItem(items[i]);
+                            }
+                        }
+                    }
+                    
+                });
+                
 				oDialog.open();
+                
+                console.log("table",this._table)
+                
 			}.bind(this));
         },
 
@@ -90,19 +143,25 @@ sap.ui.define([
 
         onCartItemClicked: function (oEvent) {
 
+            var source = oEvent.getSource();
+            console.log("source",source);
             var item =  oEvent.getSource().getSelectedItem();
             var object = item.getBindingContext().getObject();
             console.log("item", item);
             console.log("object", object);
+            var cartInfo = {
+                ID: object.ID,
+                cardNo: object.CardNo,
+                total: object.total
+            }
             // set to base model
             var baseModel = new JSONModel({
-                cartInfo: {
-                    ID: object.ID,
-                    cardNo: object.CardNo,
-                    total: object.total
-                }
+                cartInfo: cartInfo
             });
             this.setModel(baseModel, "baseModel");
+            // save to cookie
+            this._oStorage.put("baseModel", JSON.stringify(cartInfo));
+            
         },
 
 

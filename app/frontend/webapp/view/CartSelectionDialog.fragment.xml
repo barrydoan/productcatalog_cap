@@ -24,7 +24,7 @@
                 <items >
                     <ColumnListItem type="Active" id="item0" >
                         <cells>  
-                            <Text name="cartNo" text="{CardNo}"/>
+                            <Text text="{CardNo}"/>
                             <u:Currency
 						        value="{total}" 
                                 currency="USD" maxPrecision="2" useSymbol="false"/>
