@@ -4,7 +4,9 @@ sap.ui.define([
     "sap/m/library",
     'sap/ui/core/Fragment',
     "sap/ui/model/json/JSONModel",
-], function (Controller, UIComponent, mobileLibrary, Fragment, JSONModel) {
+    './webclient',
+    './webclientbridge'
+], function (Controller, UIComponent, mobileLibrary, Fragment, JSONModel, webclient, webclientbridge) {
     "use strict";
 
     return Controller.extend("frontend.controller.BaseController", {
@@ -84,6 +86,18 @@ sap.ui.define([
             }
 
             console.log("onInit work");
+        },
+
+        onAfterRendering: function() {
+            console.log("load chat bot");
+            var s = document.createElement("script");
+            s.setAttribute("src", "https://cdn.cai.tools.sap/webclient/bootstrap.js");
+            s.setAttribute("id", "cai-webclient-custom");
+            s.setAttribute("data-channel-id",data_channel_id);
+            s.setAttribute("data-token",data_token);
+            s.setAttribute("data-expander-type","CAI");
+            s.setAttribute("data-expander-preferences",data_expander_preferences);
+            document.body.appendChild(s);
         },
 
 
@@ -175,6 +189,19 @@ sap.ui.define([
             this._pDialog.then(function(oDialog) {
                 oDialog.close();
             })
+        },
+
+        onPressOpenBot: function (oEvent) {
+            console.log("window", window.sap.webchat);
+            window.sap.cai.webclient.show();
+        },
+
+        onPressCloseBot: function (oEvent) {
+            window.sap.cai.webclient.hide();
+        },
+
+        onPressToggleBot: function (oEvent) {
+            window.sap.cai.webclient.toggle();
         }
     });
 

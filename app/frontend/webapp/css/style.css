@@ -20,3 +20,12 @@
     padding: 0 5px;
     width: 10px;
 }
+
+#cai-webclient-builtin-button {
+    height: fit-content;
+    bottom: 50px !important;
+}
+
+#cai-webclient-main {
+    bottom: 50px !important;
+}

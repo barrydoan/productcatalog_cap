@@ -9,7 +9,8 @@
     <semantic:SemanticPage
         id="page"
         headerPinnable="false"
-        toggleHeaderOnTitleClick="false">
+        toggleHeaderOnTitleClick="false"
+        showFooter="true">
 
         <semantic:titleHeading>
             <Title text="Product List" />
@@ -158,5 +159,12 @@
                 </columns>
             </Table>
         </semantic:content>
+
+		<!-- Custom Footer Content-->
+		<semantic:footerCustomActions >
+		    <Button text="Open Bot" type="Attention" press="onPressOpenBot" />
+            <Button text="Close Bot" type="Attention" press="onPressCloseBot" />
+            <Button text="Toggle Bot" type="Emphasized" press="onPressToggleBot" />
+		</semantic:footerCustomActions>
     </semantic:SemanticPage>
 </mvc:View>
