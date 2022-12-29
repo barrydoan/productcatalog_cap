@@ -5,17 +5,16 @@ const webclientBridge = {
         return {memory, merge: true}
     },
     onMessage: (payload) => {
-        var displayMessage
-        payload.messages.forEach(element => {
-            if (element.participant.isBot) {
-                displayMessage = 'The Bot said:\n\n';
+        payload.messages.map(message => {
+            if (message.attachment.type == 'client_data') {
+                message.attachment.content.elements.map(pair => {
+                    if (pair.key == 'navigate') {
+                        console.log("Navigate to: " + pair.value);
+                        window.location.href = 'index.html#/' + pair.value;
+                    }
+                })
             }
-            else {
-                displayMessage = 'The User said:\n\n';
-            }
-            displayMessage += element.attachment.content.text
         });
-        alert(displayMessage);
     }
 
 }
