@@ -7,8 +7,10 @@ sap.ui.define([
     'sap/ui/core/Fragment',
     'sap/ui/Device',
     'sap/ui/model/Sorter',
-    'sap/ui/model/odata/v4/ODataModel'
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment, Device, Sorter, ODataModel) {
+    'sap/ui/model/odata/v4/ODataModel',
+    'sap/base/util/UriParameters',
+    'sap/ui/core/routing/HashChanger'
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment, Device, Sorter, ODataModel, UriParameters, HashChanger) {
     "use strict";
 
     return BaseController.extend("frontend.controller.MainView", {
@@ -64,9 +66,28 @@ sap.ui.define([
                 serviceUrl : "cart/"
             })
             console.log("oDataModel", this._oDataModel);
+            //
+            var oHashChanger = HashChanger.getInstance();
+            var that = this;
+            oHashChanger.attachEvent("hashChanged", function(oEvent) {
+                // change the filter based on the url
+                console.log("Hash changed");
+                var category = UriParameters.fromQuery(window.location.hash.replace('#/', '')).get("category");
+                if (category) {
+                    var oBinding = that.byId("table").getBinding("items");
+                    var oFilter = new Filter("categoryName", "EQ", category);
+                    oBinding.filter([oFilter]);
+                    // set value for category
+                    that.byId("oComboBoxCategory").setValue(category);
+                    window.location.hash = '';
+                }
+            });
+
             
             
         },
+
+    
 
         
 
@@ -84,6 +105,7 @@ sap.ui.define([
          * @public
          */
         onUpdateFinished: function (oEvent) {
+            console.log("onUpdateFinished");
             // update the worklist's object counter after the table update
             var sTitle,
                 oTable = oEvent.getSource(),
@@ -96,6 +118,7 @@ sap.ui.define([
                 sTitle = this.getResourceBundle().getText("worklistTableTitle");
             }
             this.getModel("worklistView").setProperty("/worklistTableTitle", sTitle);
+            
         },
 
         /**
