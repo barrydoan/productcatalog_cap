@@ -27,8 +27,17 @@ const webclientBridge = {
                     window.location.href = 'index.html#/' + messageInfo.page;
                 }
                 else if (messageInfo.hasNavigate && messageInfo.hasParameter) {
+                    // for product page
                     if (messageInfo.page === "") {
                         window.location.href = 'index.html#/' + messageInfo.page + '?category=' + messageInfo.parameter;
+                    }
+                    // for cart page
+                    else if (messageInfo.page == "carts") {
+                        window.location.href = 'index.html#/' + messageInfo.page
+                    }
+                    // for cart detail page
+                    else if (messageInfo.page == "cartdetail") {
+                        window.location.href = 'index.html#/' + messageInfo.page + '/' + messageInfo.parameter;
                     }
                 }
             }
