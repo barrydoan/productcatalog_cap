@@ -81,18 +81,13 @@ sap.ui.define([
                     "total": oDialog.getModel().oData.total
                 }
                 // create new cart
-                jQuery.ajax(
-                    "/cart/Carts",
-                    {
-                        data:  JSON.stringify(data),
-                        contentType : 'application/json',
-                        type : 'POST',
-                        success: function(data) {
-                            that.onRefresh();
-                            oDialog.close();
-                        }
-                    }
-                ); 
+                var listBinding = that._oDataModel.bindList('/Carts', undefined, undefined, undefined, { $$updateGroupId: "CreateCart" });
+                var context = listBinding.create(data);
+                context.created();
+                that._oDataModel.submitBatch("CreateCart").then(function () {
+                    that.onRefresh();
+                    oDialog.close();
+                });
             });
         }, 
         onDeleteClicked: function(oEvent) {
@@ -101,16 +96,17 @@ sap.ui.define([
             var cartId = jQuery.sap.byId(button.oParent.sId).find("[name='cartId']").val();
             console.log("cartId", cartId);
             var that = this;
-            jQuery.ajax(
-                "/cart/Carts(" + cartId + ")",
-                {
-                    contentType : 'application/json',
-                    type : 'DELETE',
-                    success: function () {
-                        that.onRefresh();
+            // delete cart 
+            var listBinding = this._oDataModel.bindList('/Carts');
+            listBinding.requestContexts().then(function (aContexts) {
+                aContexts.forEach(function (oContext) {
+                    if (oContext.getProperty("ID") === cartId) {
+                        oContext.delete().then(function () {
+                            that.onRefresh();
+                        });
                     }
-                },
-            ); 
+                });
+            });
         },
         onAcceptClicked: function(oEvent) {
             var button = oEvent.getSource();
@@ -124,17 +120,18 @@ sap.ui.define([
                 "cardNo": cartNo
             }
             var that = this;
-            jQuery.ajax(
-                "/cart/Carts(" + cartId + ")",
-                {
-                    contentType : 'application/json',
-                    data: JSON.stringify(data),
-                    type : 'PUT',
-                    success: function () {
-                        that.onRefresh();
-                    }
-                },
-            ); 
+            // update cart
+            var cart = this._oDataModel.bindContext('/Carts(' + cartId + ')',undefined, undefined, undefined, { $$updateGroupId: "UpdateCart" });
+            cart.requestObject().then(function (cartValue) {
+                if (cartValue) {
+                    cartValue.cardNo = cartNo;
+                }
+                
+            });
+            that._oDataModel.submitBatch("UpdateCart").then(function () {
+                console.log("refesh")
+                that.onRefresh();
+            });
         }
     });
 

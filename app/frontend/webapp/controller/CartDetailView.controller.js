@@ -145,12 +145,59 @@ sap.ui.define([
 
         getCartItem: function(cartId) {
             var that = this;
+            // get cart item 
+            var listBinding = this._oDataModel.bindList("/CartItems", null, [], [new Filter("parent_ID", "EQ", cartId)], { $$updateGroupId: "CreateCart", $$operationMode: "Server", $expand: "product" });
+            listBinding.requestContexts().then(function (aContexts) {
+                var data = {
+                    "value": [{
+                        product: {
+                            "createdAt": null,
+                            "modifiedAt": null,
+                            "ID": 16,
+                            "shortId": "10146796",
+                            "NDC": "00536-1006-01",
+                            "UPC": "3-05361-00601-3",
+                            "name": "ALLER CHLOR/CPM 4MG",
+                            "stock": 12,
+                            "acqCost": 1.45,
+                            "retailPrice": 7.3,
+                            "awp": 5.7,
+                            "rebate": 0,
+                            "perDose": 0.01,
+                            "unitSize": 100,
+                            "form": "TABLET",
+                            "caseQuantity": null,
+                            "imageUrl": "10146796-264410-Abc700Wx700H.jpg",
+                            "data@odata.mediaContentType": "application/binary",
+                            "currency_code": "USD",
+                            "supplier_ID": 29,
+                            "category_ID": 2,
+                            "categoryName": "OT Over the Counter",
+                            "supplierName": "RUGBY"
+                        }
+                    }]
+                };
+                aContexts.forEach(function (oContext) {
+                    oContext.requestObject().then(function(object) {
+                        data.value.push(object)
+                    });
+                    
+                });
+                var cartItemsModel = new JSONModel(data);
+                that.setModel(cartItemsModel, "cartItemsModel2");
+                console.log("cartItemsModel2", that.getModel("cartItemsModel2"));
+                
+
+            });
+
+            
             jQuery.ajax(
-                origin + "/cart/CartItems?$filter=parent_ID eq " + cartId + "&$expand=product",
+                "/cart/CartItems?$filter=parent_ID eq " + cartId + "&$expand=product",
                 {
                     contentType : 'application/json',
                     type : 'GET',
                     success: function (data) {
+                        console.log("data", data)
                         var cartItemsModel = new JSONModel(data);
                         that.setModel(cartItemsModel, "cartItemsModel");
                         console.log("cartItemsModel", cartItemsModel);
@@ -158,6 +205,9 @@ sap.ui.define([
                 },
                 
             ); 
+        
+            
+            
         },
 
         getCartDetail: function(cartId) {

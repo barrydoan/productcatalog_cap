@@ -3,8 +3,9 @@ sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/m/library",
     'sap/ui/core/Fragment',
-    "sap/ui/model/json/JSONModel"
-], function (Controller, UIComponent, mobileLibrary, Fragment, JSONModel, webclient, webclientbridge) {
+    "sap/ui/model/json/JSONModel",
+    'sap/ui/model/odata/v4/ODataModel'
+], function (Controller, UIComponent, mobileLibrary, Fragment, JSONModel, ODataModel) {
     "use strict";
 
     return Controller.extend("frontend.controller.BaseController", {
@@ -48,7 +49,13 @@ sap.ui.define([
             return this.getOwnerComponent().getModel("i18n").getResourceBundle();
         },
 
-        onBaseInit: function() {
+        onAfterRendering: function() {
+            // set up for selected cart
+            this._oDataModel = new ODataModel({
+                groupId : "$auto",
+                synchronizationMode : "None",
+                serviceUrl : "/cart/"
+            })
             this._oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
             var that = this;
             // get the data from the local store
@@ -56,21 +63,19 @@ sap.ui.define([
             console.log("cartInforVlaue", cartInfoValue);
             if (cartInfoValue) {
                 var cartInfo = JSON.parse(cartInfoValue);
-                jQuery.ajax(
-                    "/cart/Carts(" + cartInfo.ID + ")",
-                    {
-                        contentType : 'application/json',
-                        type : 'GET',
-                        success: function() {
-                            var baseModel = new JSONModel({
-                                cartInfo: cartInfo
-                            });
-                            that.setModel(baseModel, "baseModel");
-                        }
+                // call the service to check the value of cart info
+                var cart = this._oDataModel.bindContext('/Carts(' + cartInfo.ID + ')');
+                console.log("cart", cart);
+                cart.requestObject("ID").then(function (id) {
+                    console.log("ID", id)
+                    if (id === cartInfo.ID) {
+                        console.log("new id");
+                        var baseModel = new JSONModel({
+                            cartInfo: cartInfo
+                        });
+                        that.setModel(baseModel, "baseModel");
                     }
-                ); 
-
-                
+                });
             }
             else {
                 var baseModel = new JSONModel({
@@ -82,11 +87,7 @@ sap.ui.define([
                 });
                 this.setModel(baseModel, "baseModel");
             }
-
-            console.log("onInit work");
-        },
-
-        onAfterRendering: function() {
+            // config for bot
             const data_expander_preferences = "JTdCJTIyZXhwYW5kZXJMb2dvJTIyJTNBJTIyaHR0cHMlM0ElMkYlMkZjZG4uY2FpLnRvb2xzLnNhcCUyRndlYmNoYXQlMkZ3ZWJjaGF0LWxvZ28uc3ZnJTIyJTJDJTIyZXhwYW5kZXJUaXRsZSUyMiUzQSUyMkNsaWNrJTIwb24lMjBtZSElMjIlMkMlMjJvbmJvYXJkaW5nTWVzc2FnZSUyMiUzQSUyMkNoYXQlMjB3aXRoJTIwbWUhJTIyJTJDJTIydGhlbWUlMjIlM0ElMjJERUZBVUxUJTIyJTdE"
             const data_channel_id = "5eed170f-fa43-4098-a9af-bddbcf29b0b5";
             const data_token = "96627c5f4b9c958bb778ceedf0b5b237";

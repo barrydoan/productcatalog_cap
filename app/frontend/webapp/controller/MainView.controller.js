@@ -26,7 +26,6 @@ sap.ui.define([
          * @public
          */
         onInit: function () {
-            this.onBaseInit();
             this._mViewSettingsDialogs = {};
             var oViewModel,
                 iOriginalBusyDelay,
@@ -57,16 +56,6 @@ sap.ui.define([
                 // Restore original busy indicator delay for worklist's table
                 oViewModel.setProperty("/tableBusyDelay", iOriginalBusyDelay);
             });
-
-            var origin = window.location.origin;
-            console.log("origin", origin);
-            this._oDataModel = new ODataModel({
-                groupId : "$direct",
-                synchronizationMode : "None",
-                serviceUrl : "cart/"
-            })
-            console.log("oDataModel", this._oDataModel);
-            //
             var oHashChanger = HashChanger.getInstance();
             var that = this;
             oHashChanger.attachEvent("hashChanged", function(oEvent) {
@@ -296,14 +285,11 @@ sap.ui.define([
                 alert("Please select cart");
             }
             else {
-                jQuery.ajax(
-                    origin + "/cart/CartItems",
-                    {
-                        data:  JSON.stringify(data),
-                        contentType : 'application/json',
-                        type : 'POST'
-                    }
-                ); 
+                // add item to cart
+                var listBinding = this._oDataModel.bindList('/CartItems', undefined, undefined, undefined, { $$updateGroupId: "AddToCart" });
+                var context = listBinding.create(data);
+                context.created();
+                this._oDataModel.submitBatch("AddToCart");
             }
 
            
