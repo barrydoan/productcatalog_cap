@@ -3,9 +3,7 @@ sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/m/library",
     'sap/ui/core/Fragment',
-    "sap/ui/model/json/JSONModel",
-    './webclient',
-    './webclientbridge'
+    "sap/ui/model/json/JSONModel"
 ], function (Controller, UIComponent, mobileLibrary, Fragment, JSONModel, webclient, webclientbridge) {
     "use strict";
 
@@ -89,6 +87,10 @@ sap.ui.define([
         },
 
         onAfterRendering: function() {
+            const data_expander_preferences = "JTdCJTIyZXhwYW5kZXJMb2dvJTIyJTNBJTIyaHR0cHMlM0ElMkYlMkZjZG4uY2FpLnRvb2xzLnNhcCUyRndlYmNoYXQlMkZ3ZWJjaGF0LWxvZ28uc3ZnJTIyJTJDJTIyZXhwYW5kZXJUaXRsZSUyMiUzQSUyMkNsaWNrJTIwb24lMjBtZSElMjIlMkMlMjJvbmJvYXJkaW5nTWVzc2FnZSUyMiUzQSUyMkNoYXQlMjB3aXRoJTIwbWUhJTIyJTJDJTIydGhlbWUlMjIlM0ElMjJERUZBVUxUJTIyJTdE"
+            const data_channel_id = "5eed170f-fa43-4098-a9af-bddbcf29b0b5";
+            const data_token = "96627c5f4b9c958bb778ceedf0b5b237";
+            // load the bot
             console.log("load chat bot");
             var s = document.createElement("script");
             s.setAttribute("src", "https://cdn.cai.tools.sap/webclient/bootstrap.js");
@@ -98,6 +100,58 @@ sap.ui.define([
             s.setAttribute("data-expander-type","CAI");
             s.setAttribute("data-expander-preferences",data_expander_preferences);
             document.body.appendChild(s);
+            // add client bridge
+            const webclientBridge = {
+                getMemory: () => {
+                    let memory;
+                    memory = {'mynumber': 200}
+                    return {memory, merge: true}
+                },
+                onMessage: (payload) => {
+                    payload.messages.map(message => {
+                        if (message.attachment.type == 'client_data') {
+                            var messageInfo = {};
+                            messageInfo.hasNavigate = false;
+                            messageInfo.hasParameter = false;
+                            message.attachment.content.elements.map(pair => {
+                                if (pair.key == 'navigate') {
+                                    messageInfo.hasNavigate = true;
+                                    messageInfo.page = pair.value;
+                                    
+                                }
+                                else if (pair.key == 'parameter') {
+                                    console.log("parameter", pair.value);
+                                    messageInfo.hasParameter = true;
+                                    messageInfo.parameter = pair.value;
+                                }
+                            })
+                            console.log("Message info", messageInfo);
+                            if (messageInfo.hasNavigate && !messageInfo.hasParameter) {
+                                window.location.href = 'index.html#/' + messageInfo.page;
+                            }
+                            else if (messageInfo.hasNavigate && messageInfo.hasParameter) {
+                                // for product page
+                                if (messageInfo.page === "") {
+                                    window.location.href = 'index.html#/' + messageInfo.page + '?category=' + messageInfo.parameter;
+                                }
+                                // for cart page
+                                else if (messageInfo.page == "carts") {
+                                    window.location.href = 'index.html#/' + messageInfo.page
+                                }
+                                // for cart detail page
+                                else if (messageInfo.page == "cartdetail") {
+                                    window.location.href = 'index.html#/' + messageInfo.page + '/' + messageInfo.parameter;
+                                }
+                            }
+                        }
+                    });
+                }
+            
+            }
+            
+            window.sapcai = {
+                webclientBridge,
+            }
         },
 
 
