@@ -24,3 +24,7 @@ cf deploy mta_archives/mytravelrequest_cap_1.0.0.mtr
 cf apps 
 # run project for testing with hana database
 cds watch --profile hybrid
+# compile cds schema.cds to sql
+cds compile db/schema.cds --to sql
+# compile cds to edmx
+cds compile srv/cart-service.cds --to edmx
