@@ -57,7 +57,7 @@ sap.ui.define([
             if (cartInfoValue) {
                 var cartInfo = JSON.parse(cartInfoValue);
                 jQuery.ajax(
-                    "/cart/Carts(" + cartInfo.ID + ")",
+                    that.getBaseUrl() + "/cart/Carts(" + cartInfo.ID + ")",
                     {
                         contentType : 'application/json',
                         type : 'GET',
@@ -84,6 +84,13 @@ sap.ui.define([
             }
 
             console.log("onInit work");
+        },
+
+        getBaseUrl: function() {
+            var url1 = window.location.href
+            url1 = url1.substring(0, url1.indexOf('/index.html'))
+            var url2 = window.location.origin
+            return url1;
         },
 
         onAfterRendering: function() {

@@ -70,7 +70,7 @@ sap.ui.define([
             console.log("cartItemId", cartItemId);
             var that = this;
             jQuery.ajax(
-                origin + "/cart/CartItems(" + cartItemId + ")",
+                that.getBaseUrl() + "/cart/CartItems(" + cartItemId + ")",
                 {
                     contentType : 'application/json',
                     type : 'DELETE',
@@ -106,7 +106,7 @@ sap.ui.define([
                 }
                 // update quantity
                 jQuery.ajax(
-                    origin + "/cart/CartItems/" + cartItemId,
+                    that.getBaseUrl() + "/cart/CartItems/" + cartItemId,
                     {
                         data:  JSON.stringify(data),
                         contentType : 'application/json',
@@ -131,7 +131,7 @@ sap.ui.define([
                 "CardNo": cartNo
             }
             jQuery.ajax(
-                origin + "/cart/Carts/" + this.cartId,
+                that.getBaseUrl() + "/cart/Carts/" + this.cartId,
                 {
                     contentType : 'application/json',
                     type : 'PUT',
@@ -146,7 +146,7 @@ sap.ui.define([
         getCartItem: function(cartId) {
             var that = this;
             jQuery.ajax(
-                origin + "/cart/CartItems?$filter=parent_ID eq " + cartId + "&$expand=product",
+                that.getBaseUrl() + "/cart/CartItems?$filter=parent_ID eq " + cartId + "&$expand=product",
                 {
                     contentType : 'application/json',
                     type : 'GET',
@@ -163,7 +163,7 @@ sap.ui.define([
         getCartDetail: function(cartId) {
             var that = this;
             jQuery.ajax(
-                origin + "/cart/Carts(" + this.cartId + ")?&$expand=Items",
+                that.getBaseUrl() + "/cart/Carts(" + this.cartId + ")?&$expand=Items",
                 {
                     contentType : 'application/json',
                     type : 'GET',

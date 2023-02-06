@@ -281,7 +281,6 @@ sap.ui.define([
             
             console.log(jQuery.sap)
 
-            var origin = window.location.origin;
 
             var baseModel = this.getModel("baseModel");
             var cartInfo = baseModel.oData.cartInfo;
@@ -297,7 +296,7 @@ sap.ui.define([
             }
             else {
                 jQuery.ajax(
-                    origin + "/cart/CartItems",
+                    this.getBaseUrl() + "/cart/CartItems",
                     {
                         data:  JSON.stringify(data),
                         contentType : 'application/json',

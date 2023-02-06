@@ -53,11 +53,9 @@
                 
                 <items >
                     <ColumnListItem type="Active" id="item0" press=".showCartDetail">
-                        <cells>  
-                            <HBox >
-                                <Input name="cartNo" type="text" value="{CardNo}"/>
-                                <Button icon="sap-icon://accept" type="Transparent" press=".onAcceptClicked"/>
-                            </HBox>
+                        <cells> 
+                            <Text  text="{CardNo}" /> 
+                            <Text  text="{ID}" /> 
                             <u:Currency
 						        value="{total}" 
                                 currency="USD" maxPrecision="2" useSymbol="false"/>
@@ -76,6 +74,11 @@
                     <Column>
                         <header>
                             <Label text="CartNo"/>
+                        </header>
+                    </Column>
+                    <Column>
+                        <header>
+                            <Label text="CartID"/>
                         </header>
                     </Column>
                     <Column hAlign="End">

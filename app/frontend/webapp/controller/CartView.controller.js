@@ -82,7 +82,7 @@ sap.ui.define([
                 }
                 // create new cart
                 jQuery.ajax(
-                    "/cart/Carts",
+                    that.getBaseUrl() + "/cart/Carts",
                     {
                         data:  JSON.stringify(data),
                         contentType : 'application/json',
@@ -102,7 +102,7 @@ sap.ui.define([
             console.log("cartId", cartId);
             var that = this;
             jQuery.ajax(
-                "/cart/Carts(" + cartId + ")",
+                that.getBaseUrl() + "/cart/Carts(" + cartId + ")",
                 {
                     contentType : 'application/json',
                     type : 'DELETE',
@@ -125,7 +125,7 @@ sap.ui.define([
             }
             var that = this;
             jQuery.ajax(
-                "/cart/Carts(" + cartId + ")",
+                that.getBaseUrl() + "/cart/Carts(" + cartId + ")",
                 {
                     contentType : 'application/json',
                     data: JSON.stringify(data),
