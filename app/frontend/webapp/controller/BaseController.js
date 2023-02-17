@@ -209,6 +209,21 @@ sap.ui.define([
         },
 
         onEditClicked: function (oEvent) {
+            console.log("go to cart");
+            var cartInfoValue = this._oStorage.get("baseModel");
+            var cartInfo = JSON.parse(cartInfoValue);
+            if (cartInfo.ID !== "") {
+                // go to cart detail
+                console.log("cartId", cartInfo.ID);
+                this.getRouter().navTo("RouteCartDetailView", {
+                    cartId: cartInfo.ID
+                });
+                
+            }
+            else {
+                alert("Please select a cart");
+            }
+
             
         },
 

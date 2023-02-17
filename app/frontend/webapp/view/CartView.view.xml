@@ -29,8 +29,8 @@
                 <menu>
                     <Menu>
                         <MenuItem text="Select cart" icon="sap-icon://cart-approval" press=".onCartClicked"/>
-                        <MenuItem text="Edit" icon="sap-icon://edit" press="onPress" />
-                        <MenuItem text="Manage" icon="sap-icon://action-settings" press="onPress" />
+                        <MenuItem text="Edit" icon="sap-icon://edit" press=".onEditClicked" />
+                        <MenuItem text="Manage" icon="sap-icon://action-settings" press="onManageClicked" />
                     </Menu>
                 </menu>
             </MenuButton>

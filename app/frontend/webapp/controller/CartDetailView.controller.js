@@ -26,7 +26,7 @@ sap.ui.define([
          * @public
          */
         onInit: function () {
-
+            this.onBaseInit();
             var oViewModel = new JSONModel({
                 busy: true,
                 delay: 0

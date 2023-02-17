@@ -24,6 +24,7 @@ sap.ui.define([
          * @public
          */
         onInit: function () {
+            this.onBaseInit();
             var table = this.byId("table");
             console.log("table", table)
         },
