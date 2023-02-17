@@ -1,0 +1,57 @@
+<mvc:View
+	controllerName="admin.controller.ProductList"
+	xmlns="sap.ui.table"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:u="sap.ui.unified"
+	xmlns:c="sap.ui.core"
+	xmlns:m="sap.m"
+	height="100%">
+	<m:Page
+		showHeader="false"
+		enableScrolling="false"
+		class="sapUiContentPadding">
+		<m:content>
+			<Table
+				id="table"
+				rows="{/Products}"
+				selectionMode="MultiToggle"
+				visibleRowCount="7"
+				ariaLabelledBy="title">
+				<columns>
+					<Column>
+						<m:Label text="Product Name" />
+						<template>
+							<m:Text text="{name}" wrapping="false"/>
+						</template>
+					</Column>
+                    <Column>
+						<m:Label text="Category" />
+						<template>
+							<m:Text text="{category/name}" wrapping="false"/>
+						</template>
+					</Column>
+                    <Column>
+						<m:Label text="Stock" />
+						<template>
+							<m:Text text="{stock}" wrapping="false"/>
+						</template>
+					</Column>
+                    <Column>
+						<m:Label text="Retail price" />
+						<template>
+							<m:Text text="{retailPrice}" wrapping="false"/>
+						</template>
+					</Column>
+                    <Column>
+						<m:Label text="Acquire cost" />
+						<template>
+							<m:Text text="{acqCost}" wrapping="false"/>
+						</template>
+					</Column>
+				</columns>
+			</Table>
+		</m:content>
+	</m:Page>
+</mvc:View>
+
+
