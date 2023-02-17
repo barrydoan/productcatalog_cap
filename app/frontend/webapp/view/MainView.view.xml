@@ -82,7 +82,7 @@
                     </Toolbar>
                 </headerToolbar>
                 <items>
-                    <ColumnListItem type="Active" id="item0">
+                    <ColumnListItem type="Active" id="item0" press=".showProductDetail">
                         <cells>  
                             <HBox alignItems="Center" justifyContent="SpaceBetween">
                                 <Image src="img/{imageUrl}" width="100px" height="100px"  class="sapUiSmallMargin"/>

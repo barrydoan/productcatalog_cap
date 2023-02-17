@@ -309,6 +309,17 @@ sap.ui.define([
 
             
         },
+        showProductDetail: function(oEvent) {
+            var source = oEvent.getSource();
+            var context = source.getBindingContext();
+            var productId = context.getProperty("ID");
+            console.log("id", productId);
+            // navigate to cart detail page
+            this.getRouter().navTo("RouteProductDetailView", {
+                productId: productId
+            });
+            
+        },
         
 
     });

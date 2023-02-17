@@ -118,6 +118,13 @@
                     "target": [
                         "TargetCartDetailView"
                     ]
+                },
+                {
+                    "name": "RouteProductDetailView",
+                    "pattern": "product/{productId}",
+                    "target": [
+                        "TargetProductDetailView"
+                    ]
                 }
             ],
             "targets": {
@@ -141,6 +148,13 @@
                     "clearControlAggregation": false,
                     "viewId": "CartDetailView",
                     "viewName": "CartDetailView"
+                },
+                "TargetProductDetailView": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "ProducrtDetailView",
+                    "viewName": "ProductDetailView"
                 }
             }
         },

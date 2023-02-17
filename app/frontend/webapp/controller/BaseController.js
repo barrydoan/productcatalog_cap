@@ -90,7 +90,7 @@ sap.ui.define([
             var url1 = window.location.href
             url1 = url1.substring(0, url1.indexOf('/index.html'))
             var url2 = window.location.origin
-            return url1;
+            return url2;
         },
 
         onAfterRendering: function() {
