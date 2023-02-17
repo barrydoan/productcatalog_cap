@@ -26,6 +26,7 @@ sap.ui.define([
          * @public
          */
         onInit: function () {
+            this.onBaseInit();
             this.productId = "";
 
         
@@ -58,6 +59,36 @@ sap.ui.define([
                 },
                 
             ); 
+        },
+        
+        onAddToCart: function(oEvent) {
+            var productId = jQuery("[name='productId']").val();
+            var inputNumber = jQuery("[name='inputNumber']").val();
+            console.log("productId", productId);
+            console.log("inputNumber", inputNumber);
+            var baseModel = this.getModel("baseModel");
+            var cartInfo = baseModel.oData.cartInfo;
+            var data = 
+            {
+                "parent_ID": cartInfo.ID,
+                "product_ID": parseInt(productId)
+            }
+            console.log("data", data);
+            
+            if (cartInfo.ID == "") {
+                alert("Please select cart");
+            }
+            else {
+                jQuery.ajax(
+                    this.getBaseUrl() + "/cart/CartItems",
+                    {
+                        data:  JSON.stringify(data),
+                        contentType : 'application/json',
+                        type : 'POST'
+                    }
+                ); 
+            }
+
         }
         
     });

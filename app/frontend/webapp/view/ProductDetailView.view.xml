@@ -126,10 +126,16 @@
 	        </l:HorizontalLayout>
             <l:HorizontalLayout class="sapUiContentPadding" >
                 <Input
-                    id="inputNumber"
+                    name="inputNumber"
                     type="Number"
                     value="1"/>
-                <Button text="Add" design="Emphasized"></Button>
+                <Button text="Add" design="Emphasized" press=".onAddToCart"></Button>
+                <Input
+                    class="hiden-field"
+                    name="productId"
+                    type="Number"
+                    value="{productDetailModel>/ID}"
+                    />
             </l:HorizontalLayout>
         </VBox>
         </semantic:content>
