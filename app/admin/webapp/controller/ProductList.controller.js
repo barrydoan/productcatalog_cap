@@ -4,14 +4,16 @@ sap.ui.define([
     "sap/ui/table/RowAction",
 	"sap/ui/table/RowActionItem",
 	"sap/ui/table/RowSettings",
+    "sap/m/MessageToast",
+    "./BaseController"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel, RowAction, RowActionItem, RowSettings) {
+    function (Controller, JSONModel, RowAction, RowActionItem, RowSettings, MessageToast, BaseController) {
         "use strict";
 
-        return Controller.extend("admin.controller.ProductList", {
+        return BaseController.extend("admin.controller.ProductList", {
             onInit: function () {
 
                 var fnPress = this.handleActionPress.bind(this);
@@ -125,8 +127,22 @@ sap.ui.define([
             handleActionPress: function(oEvent) {
                 var oRow = oEvent.getParameter("row");
                 var oItem = oEvent.getParameter("item");
+                var source = oEvent.getSource();
+                var context = source.getBindingContext();
+                var productId = context.getProperty("ID");
+                console.log("productId", productId)
+                console.log("oRow", oRow)
+                console.log("oItem", oItem.getType())
+                if (oItem.getType() === "Navigation") {
+                    this.getRouter().navTo("RouteProductDetail", {
+                        productId: productId
+                    });
+                }
+
+                /*
                 MessageToast.show("Item " + (oItem.getText() || oItem.getType()) + " pressed for product with id " +
                     this.getView().getModel().getProperty("ProductId", oRow.getBindingContext()));
+                    */
             }
         });
     });
