@@ -78,6 +78,12 @@ sap.ui.define([
                 this._toggleButtonsAndView(false);
 
             },
+            handleSavePress: function() {
+                var that = this
+                this.getView().getModel().submitBatch("updateProduct").then(function() {
+                    that._toggleButtonsAndView(false);
+                })
+            },
 
             onFileChange: function (oEvent) {
                 console.log("onFileChange")
