@@ -76,7 +76,7 @@
 						</f:FormElement>
 						<f:FormElement label="Image">
 							<f:fields>
-								<Image width="100px" height="100px" src="{data}" />
+								<Image id="productImage" width="100px" height="100px" src="{data}" />
 								<u:FileUploader id="fileUploaderFS" multiple="false" change="onFileChange" />
  								<Button id="fileUploadButton" text="Upload" type="Accept" press=".onUploadFile"/>
 							</f:fields>

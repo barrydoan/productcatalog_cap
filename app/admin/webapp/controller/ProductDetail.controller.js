@@ -111,16 +111,21 @@ sap.ui.define([
             
             updateProductImage: function(vContent) {
                 var blob = this.b64toBlob(vContent, 'image/jpeg')
-                var formData = new FormData()
-                formData.append('source', blob)
+                var that = this
                 jQuery.ajax(
                     this.getBaseUrl() + `/admin/Products(${this.productId})/data`,
                     {
                         data:  blob,
                         contentType : false,
                         processData: false,
-                        type : 'PUT'
-                    }
+                        type : 'PUT',
+                        success: function() {
+                            var oImg = that.getView().byId('productImage')
+                            oImg.setSrc(that.getBaseUrl() + `/admin/Products(${that.productId})/data`,)
+                            console.log('oImg', oImg)
+                        }
+                    },
+                    
                 ); 
             },
 

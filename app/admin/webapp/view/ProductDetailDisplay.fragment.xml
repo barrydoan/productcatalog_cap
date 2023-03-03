@@ -57,7 +57,7 @@
                         </f:FormElement>
                         <f:FormElement label="Image">
                             <f:fields>
-                                <Image width="100px" height="100px" id="productImage" src="{data}" />
+                                <Image width="100px" height="100px" src="{data}" />
                             </f:fields>
                         </f:FormElement>
                     </f:formElements>
