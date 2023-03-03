@@ -2,7 +2,8 @@
 	xmlns="sap.m"
 	xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
-	xmlns:core="sap.ui.core">
+	xmlns:core="sap.ui.core"
+	xmlns:u="sap.ui.unified">
 	<VBox class="sapUiSmallMargin">
 		<f:Form id="FromChange"
 			editable="false">
@@ -71,6 +72,13 @@
 						<f:FormElement label="Case quantity">
 							<f:fields>
 								<Input value="{caseQuantity}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Image">
+							<f:fields>
+								<Image width="100px" height="100px" src="{data}" />
+								<u:FileUploader id="fileUploaderFS" multiple="false" change="onFileChange" />
+ 								<Button id="fileUploadButton" text="Upload" type="Accept" press=".onUploadFile"/>
 							</f:fields>
 						</f:FormElement>
 					</f:formElements>
