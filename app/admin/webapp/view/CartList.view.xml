@@ -21,6 +21,7 @@
 					<m:OverflowToolbar style="Clear">
 						<m:Title id="title" text="Cart"/>
 						<m:ToolbarSpacer/>
+						<m:Button id="new" text="New" press="handleNewPress" />
 						<m:Select id="select" items="{modes>/items}" selectedKey="Navigation" change="onBehaviourModeChange">
 							<c:Item key="{modes>key}" text="{modes>text}"/>
 						</m:Select>
