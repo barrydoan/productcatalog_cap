@@ -143,6 +143,7 @@ sap.ui.define([
                 MessageToast.show("Item " + (oItem.getText() || oItem.getType()) + " pressed for product with id " +
                     this.getView().getModel().getProperty("ProductId", oRow.getBindingContext()));
                     */
-            }
+            },
+            
         });
     });

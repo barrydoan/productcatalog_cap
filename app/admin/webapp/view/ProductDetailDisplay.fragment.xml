@@ -12,7 +12,7 @@
                     <f:formElements>
                         <f:FormElement label="ID">
                             <f:fields>
-                                <Text text="{ID}" />
+                                <Text text="{ path: 'ID', targetType: 'any'}" />
                             </f:fields>
                         </f:FormElement>
                         <f:FormElement label="Short ID">
