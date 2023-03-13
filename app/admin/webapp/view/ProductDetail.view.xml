@@ -9,8 +9,8 @@
 		<customHeader>
 			<Bar>
 				<contentLeft>
-					<Button id="back" icon="sap-icon://nav-back" press="" />
-				</contentLeft>
+                     <Button id="buttonMenu" icon="sap-icon://menu" tooltip="Menu" press="onMenuPress"  />
+                </contentLeft>
 				<contentRight>
 					<Button id="edit" text="Edit" press="handleEditPress" />
 					<Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress" />
