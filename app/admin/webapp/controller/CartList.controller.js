@@ -140,13 +140,13 @@ sap.ui.define([
                 var oItem = oEvent.getParameter("item");
                 var source = oEvent.getSource();
                 var context = source.getBindingContext();
-                var productId = context.getProperty("ID");
-                console.log("productId", productId)
+                var cartId = context.getProperty("ID");
+                console.log("cartId", cartId)
                 console.log("oRow", oRow)
                 console.log("oItem", oItem.getType())
                 if (oItem.getType() === "Navigation") {
-                    this.getRouter().navTo("RouteProductDetail", {
-                        productId: productId
+                    this.getRouter().navTo("RouteCartDetail", {
+                        cartId: cartId
                     });
                 }
 
