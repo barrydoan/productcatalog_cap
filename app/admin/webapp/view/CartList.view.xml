@@ -7,9 +7,16 @@
 	xmlns:m="sap.m"
 	height="100%">
 	<m:Page
-		showHeader="false"
+		showHeader="true"
 		enableScrolling="false"
 		class="sapUiContentPadding">
+		<m:customHeader>
+           <m:Bar>
+                <m:contentLeft>
+                     <m:Button id="buttonMenu" icon="sap-icon://menu" tooltip="Menu" press="onMenuPress"  />
+                </m:contentLeft>
+           </m:Bar>
+      	</m:customHeader>
 		<m:content>
 			<Table
 				id="table"

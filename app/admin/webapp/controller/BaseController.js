@@ -17,7 +17,7 @@ sap.ui.define([
             return UIComponent.getRouterFor(this);
         },
 
-    
+
         /**
          * Convenience method for getting the view model by name.
          * @public
@@ -47,12 +47,50 @@ sap.ui.define([
         getResourceBundle: function () {
             return this.getOwnerComponent().getModel("i18n").getResourceBundle();
         },
-        getBaseUrl: function() {
+        getBaseUrl: function () {
             var url1 = window.location.href
             url1 = url1.substring(0, url1.indexOf('/index.html'))
             var url2 = window.location.origin
             return url2;
         },
+        onMenuPress: function () {
+            var oView = this.getView(),
+                oButton = oView.byId("buttonMenu");
+
+            if (!this._oMenuFragment) {
+                this._oMenuFragment = Fragment.load({
+                    id: oView.getId(),
+                    name: "admin.view.Menu",
+                    controller: this
+                }).then(function (oMenu) {
+                    oMenu.openBy(oButton);
+                    this._oMenuFragment = oMenu;
+                    return this._oMenuFragment;
+                }.bind(this));
+            } else {
+                this._oMenuFragment.openBy(oButton);
+            }
+        },
+        onMenuAction: function(oEvent) {
+            var oItem = oEvent.getParameter("item")
+
+            var text = oItem.getText()
+            if (text === 'Products') {
+                // goto product list
+                this.getRouter().navTo("RouteProductList");
+            }
+            else if (text === 'Carts') {
+                // goto cart list
+                this.getRouter().navTo("RouteCartList");
+            }
+            else if (text === 'Categories') {
+                // goto category list
+            }
+            else if (text === 'Suppliers') {
+                // goto supplier list
+            }
+        }
+    
     });
 
 });
