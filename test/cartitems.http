@@ -1,0 +1,9 @@
+GET http://localhost:4004/admin/CartItems
+
+### UPDATE CartItem
+PATCH  http://localhost:4004/admin/CartItems(5dacf380-2139-48b6-a7a0-332eff8caeaf)
+Content-Type: application/json
+
+{
+    "amount": 2
+}

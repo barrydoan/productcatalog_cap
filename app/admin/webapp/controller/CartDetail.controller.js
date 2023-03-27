@@ -20,8 +20,6 @@ sap.ui.define([
                 var route = this.getRouter().getRoute("RouteCartDetail");
                 route.attachPatternMatched(this._attachPatternMatched, this);
                 this._showFormFragment("CartDetailDisplay")
-
-
             },
 
             _attachPatternMatched: function (oEvent) {
@@ -76,11 +74,23 @@ sap.ui.define([
             },
             handleSavePress: function() {
                 var that = this
+                
+                var oItems = this.getView().byId("tableedit").getRows();
+                var oModel = this.getView().byId("tableedit").getModel();
+                console.log('oItem', oItems)
+                console.log('oModel', oModel)
                 /*
-                this.getView().getModel().submitBatch("updateProduct").then(function() {
+                oItems.forEach(function(oItem) {
+                    var oContext = oItem.getBindingContext()
+                    console.log("path", oContext.getPath())
+                });
+                */
+            
+                
+                this.getView().getModel().submitBatch("updateCart").then(function() {
                     that._toggleButtonsAndView(false);
                 })
-                */
+                
             },
 
             
