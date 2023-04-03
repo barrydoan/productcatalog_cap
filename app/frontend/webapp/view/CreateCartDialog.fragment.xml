@@ -11,10 +11,10 @@
 		</content>
 		
 		<beginButton>
-			<Button type="Emphasized" text="Ok" press=".onDialogOkClicked"/>
+			<Button type="Emphasized" text="Ok" press=".onDialogNewCartOkClicked"/>
 		</beginButton>
 		<endButton>
-			<Button text="Cancel" press=".onDialogCancelClicked"/>		
+			<Button text="Cancel" press=".onDialogNewCartCancelClicked"/>		
 		</endButton>
 	</Dialog>
 </core:FragmentDefinition>

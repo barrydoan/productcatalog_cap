@@ -64,7 +64,7 @@ sap.ui.define([
 			});
 
         },
-        onDialogCancelClicked: function(oEvent) {
+        onDialogNewCartCancelClicked: function(oEvent) {
             this.createCartDialog.then(function(oDialog) {
                 oDialog.close();
             })
@@ -73,7 +73,7 @@ sap.ui.define([
             var oTable = this.byId("table");
             oTable.getBinding("items").refresh();
         },
-        onDialogOkClicked: function(oEvent) {
+        onDialogNewCartOkClicked: function(oEvent) {
             var that = this;
             this.createCartDialog.then(function(oDialog) {
                 console.log("oData", oDialog.getModel().oData);
