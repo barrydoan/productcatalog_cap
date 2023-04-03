@@ -50,32 +50,6 @@ sap.ui.define([
                             return [2, oTemplate];
                         }
                     }, {
-                        key: "NavigationCustom",
-                        text: "Navigation & Custom",
-                        handler: function() {
-                            var oTemplate = new RowAction({items: [
-                                new RowActionItem({
-                                    type: "Navigation",
-                                    press: fnPress,
-                                    visible: "{Available}"
-                                }),
-                                new RowActionItem({icon: "sap-icon://edit", text: "Edit", press: fnPress})
-                            ]});
-                            return [2, oTemplate];
-                        }
-                    }, {
-                        key: "Multi",
-                        text: "Multiple Actions",
-                        handler: function() {
-                            var oTemplate = new RowAction({items: [
-                                new RowActionItem({icon: "sap-icon://attachment", text: "Attachment", press: fnPress}),
-                                new RowActionItem({icon: "sap-icon://search", text: "Search", press: fnPress}),
-                                new RowActionItem({icon: "sap-icon://edit", text: "Edit", press: fnPress}),
-                                new RowActionItem({icon: "sap-icon://line-chart", text: "Analyze", press: fnPress})
-                            ]});
-                            return [2, oTemplate];
-                        }
-                    }, {
                         key: "None",
                         text: "No Actions",
                         handler: function() {
@@ -136,16 +110,27 @@ sap.ui.define([
                 console.log("cartId", cartId)
                 console.log("oRow", oRow)
                 console.log("oItem", oItem.getType())
+                var that = this;
                 if (oItem.getType() === "Navigation") {
                     this.getRouter().navTo("RouteCartDetail", {
                         cartId: cartId
                     });
                 }
-
-                /*
-                MessageToast.show("Item " + (oItem.getText() || oItem.getType()) + " pressed for product with id " +
-                    this.getView().getModel().getProperty("ProductId", oRow.getBindingContext()));
-                    */
+                else if (oItem.getType() === "Delete") {
+                    console.log("Delete cart");
+                    var listBinding = this.getView().getModel().bindList(`/Carts`)
+                    listBinding.requestContexts().then(function (aContexts) {
+                        aContexts.forEach(function (oContext) {
+                            if (oContext.getProperty("ID") === cartId) {
+                                oContext.delete().then(function () {
+                                    var oModel = that.getView().getModel();
+                                    // refresh data
+                                    oModel.refresh()
+                                });
+                            }
+                        });
+                    });
+                }
             },
 
             handleNewPress: function (oEvent) {
