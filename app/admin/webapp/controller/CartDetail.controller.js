@@ -47,9 +47,13 @@ sap.ui.define([
 
             _showFormFragment: function (sFragmentName) {
                 var oPage = this.byId("page");
+                var that = this
                 oPage.removeAllContent();
                 this._getFormFragment(sFragmentName).then(function (oVBox) {
                     oPage.insertContent(oVBox);
+                    var oModel = that.getView().getModel();
+                    // refresh data
+                    oModel.refresh()
                 });
             },
             _toggleButtonsAndView: function (bEdit) {
