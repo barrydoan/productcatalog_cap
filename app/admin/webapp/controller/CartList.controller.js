@@ -25,68 +25,60 @@ sap.ui.define([
                     {
                         key: "Navigation",
                         text: "Navigation",
-                        handler: function () {
-                            var oTemplate = new RowAction({
-                                items: [
-                                    new RowActionItem({
-                                        type: "Navigation",
-                                        press: fnPress,
-                                        visible: "{Available}"
-                                    })
-                                ]
-                            });
+                        handler: function() {
+                            var oTemplate = new RowAction({items: [
+                                new RowActionItem({
+                                    type: "Navigation",
+                                    press: fnPress,
+                                    visible: "{Available}"
+                                })
+                            ]});
                             return [1, oTemplate];
                         }
                     }, {
                         key: "NavigationDelete",
                         text: "Navigation & Delete",
-                        handler: function () {
-                            var oTemplate = new RowAction({
-                                items: [
-                                    new RowActionItem({
-                                        type: "Navigation",
-                                        press: fnPress,
-                                        visible: "{Available}"
-                                    }),
-                                    new RowActionItem({ type: "Delete", press: fnPress })
-                                ]
-                            });
+                        handler: function() {
+                            var oTemplate = new RowAction({items: [
+                                new RowActionItem({
+                                    type: "Navigation",
+                                    press: fnPress,
+                                    visible: "{Available}"
+                                }),
+                                new RowActionItem({type: "Delete", press: fnPress})
+                            ]});
                             return [2, oTemplate];
                         }
                     }, {
                         key: "NavigationCustom",
                         text: "Navigation & Custom",
-                        handler: function () {
-                            var oTemplate = new RowAction({
-                                items: [
-                                    new RowActionItem({
-                                        type: "Navigation",
-                                        press: fnPress,
-                                        visible: "{Available}"
-                                    }),
-                                    new RowActionItem({ icon: "sap-icon://edit", text: "Edit", press: fnPress })
-                                ]
-                            });
+                        handler: function() {
+                            var oTemplate = new RowAction({items: [
+                                new RowActionItem({
+                                    type: "Navigation",
+                                    press: fnPress,
+                                    visible: "{Available}"
+                                }),
+                                new RowActionItem({icon: "sap-icon://edit", text: "Edit", press: fnPress})
+                            ]});
                             return [2, oTemplate];
                         }
                     }, {
                         key: "Multi",
                         text: "Multiple Actions",
-                        handler: function () {
-                            var oTemplate = new RowAction({
-                                items: [
-                                    new RowActionItem({ icon: "sap-icon://attachment", text: "Attachment", press: fnPress }),
-                                    new RowActionItem({ icon: "sap-icon://search", text: "Search", press: fnPress }),
-                                    new RowActionItem({ icon: "sap-icon://edit", text: "Edit", press: fnPress }),
-                                    new RowActionItem({ icon: "sap-icon://line-chart", text: "Analyze", press: fnPress })
-                                ]
-                            });
+                        handler: function() {
+                            var oTemplate = new RowAction({items: [
+                                new RowActionItem({icon: "sap-icon://attachment", text: "Attachment", press: fnPress}),
+                                new RowActionItem({icon: "sap-icon://search", text: "Search", press: fnPress}),
+                                new RowActionItem({icon: "sap-icon://edit", text: "Edit", press: fnPress}),
+                                new RowActionItem({icon: "sap-icon://line-chart", text: "Analyze", press: fnPress})
+                            ]});
                             return [2, oTemplate];
                         }
                     }, {
                         key: "None",
                         text: "No Actions",
-                        handler: function () {
+                        handler: function() {
                             return [0, null];
                         }
                     }

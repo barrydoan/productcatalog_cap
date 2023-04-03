@@ -20,6 +20,69 @@ sap.ui.define([
                 var route = this.getRouter().getRoute("RouteCartDetail");
                 route.attachPatternMatched(this._attachPatternMatched, this);
                 this._showFormFragment("CartDetailDisplay")
+
+                var fnPress = this.handleActionPress.bind(this);
+                this.modes = [
+                    {
+                        key: "Delete",
+                        text: "Delete",
+                        handler: function() {
+                            var oTemplate = new RowAction({items: [
+                                new RowActionItem({type: "Delete", press: fnPress})
+                            ]});
+                            return [1, oTemplate];
+                        }
+                    }, {
+                        key: "None",
+                        text: "No Actions",
+                        handler: function() {
+                            return [0, null];
+                        }
+                    }
+                ];
+
+                this.getView().setModel(new JSONModel({ items: this.modes }), "modes");
+                
+
+            },
+
+            onNavIndicatorsToggle: function (oEvent) {
+                var oTable = this.byId("tableedit");
+                var oToggleButton = oEvent.getSource();
+
+                if (oToggleButton.getPressed()) {
+                    oTable.setRowSettingsTemplate(new RowSettings({
+                        navigated: "{NavigatedState}"
+                    }));
+                } else {
+                    oTable.setRowSettingsTemplate(null);
+                }
+            },
+
+            onBehaviourModeChange: function (oEvent) {
+                this.switchState(oEvent.getParameter("selectedItem").getKey());
+            },
+
+            switchState: function (sKey) {
+                var oTable = this.byId("tableedit");
+                var iCount = 0;
+                var oTemplate = oTable.getRowActionTemplate();
+                if (oTemplate) {
+                    oTemplate.destroy();
+                    oTemplate = null;
+                }
+
+                for (var i = 0; i < this.modes.length; i++) {
+                    if (sKey == this.modes[i].key) {
+                        var aRes = this.modes[i].handler();
+                        iCount = aRes[0];
+                        oTemplate = aRes[1];
+                        break;
+                    }
+                }
+
+                oTable.setRowActionTemplate(oTemplate);
+                oTable.setRowActionCount(iCount);
             },
 
             _attachPatternMatched: function (oEvent) {
@@ -54,6 +117,9 @@ sap.ui.define([
                     var oModel = that.getView().getModel();
                     // refresh data
                     oModel.refresh()
+                    if (sFragmentName === "CartDetailChange") {
+                        that.switchState("Delete");
+                    }
                 });
             },
             _toggleButtonsAndView: function (bEdit) {
@@ -96,6 +162,31 @@ sap.ui.define([
                 })
                 
             },
+            handleActionPress: function (oEvent) {
+                var oRow = oEvent.getParameter("row");
+                var oItem = oEvent.getParameter("item");
+                var source = oEvent.getSource();
+                var context = source.getBindingContext();
+                var id = context.getProperty("ID");
+                var that = this;
+                if (oItem.getType() === "Delete") {
+                    console.log("Delete row")
+                    var listBinding = this.getView().getModel().bindList(`/Carts(${this.cartId})/Items`)
+                    listBinding.requestContexts().then(function (aContexts) {
+                        aContexts.forEach(function (oContext) {
+                            if (oContext.getProperty("ID") === id) {
+                                oContext.delete().then(function () {
+                                    var oModel = that.getView().getModel();
+                                    // refresh data
+                                    oModel.refresh()
+                                });
+                            }
+                        });
+                    });
+                }
+
+                
+            }
 
             
             
