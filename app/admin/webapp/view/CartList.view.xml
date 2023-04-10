@@ -21,8 +21,9 @@
 			<Table
 				id="table"
 				rows="{/Carts}"
-				selectionMode="MultiToggle"
+				selectionMode="Single"
 				visibleRowCountMode="Auto"
+				rowSelectionChange="selectionChangeHandler"
 				ariaLabelledBy="title">
 				<extension>
 					<m:OverflowToolbar style="Clear">

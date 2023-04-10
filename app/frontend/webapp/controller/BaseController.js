@@ -49,6 +49,9 @@ sap.ui.define([
         },
 
         onBaseInit: function() {
+        
+            this._pDialog = null;
+            console.log("dialog",this._pDialog)
             this._oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
             var that = this;
             // get the data from the local store

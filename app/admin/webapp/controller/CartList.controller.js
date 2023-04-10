@@ -17,7 +17,7 @@ sap.ui.define([
 
         return BaseController.extend("admin.controller.CartList", {
             onInit: function () {
-
+                this._oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
                 var fnPress = this.handleActionPress.bind(this);
                 this.newCartDialog = null
 
@@ -25,34 +25,38 @@ sap.ui.define([
                     {
                         key: "Navigation",
                         text: "Navigation",
-                        handler: function() {
-                            var oTemplate = new RowAction({items: [
-                                new RowActionItem({
-                                    type: "Navigation",
-                                    press: fnPress,
-                                    visible: "{Available}"
-                                })
-                            ]});
+                        handler: function () {
+                            var oTemplate = new RowAction({
+                                items: [
+                                    new RowActionItem({
+                                        type: "Navigation",
+                                        press: fnPress,
+                                        visible: "{Available}"
+                                    })
+                                ]
+                            });
                             return [1, oTemplate];
                         }
                     }, {
                         key: "NavigationDelete",
                         text: "Navigation & Delete",
-                        handler: function() {
-                            var oTemplate = new RowAction({items: [
-                                new RowActionItem({
-                                    type: "Navigation",
-                                    press: fnPress,
-                                    visible: "{Available}"
-                                }),
-                                new RowActionItem({type: "Delete", press: fnPress})
-                            ]});
+                        handler: function () {
+                            var oTemplate = new RowAction({
+                                items: [
+                                    new RowActionItem({
+                                        type: "Navigation",
+                                        press: fnPress,
+                                        visible: "{Available}"
+                                    }),
+                                    new RowActionItem({ type: "Delete", press: fnPress })
+                                ]
+                            });
                             return [2, oTemplate];
                         }
                     }, {
                         key: "None",
                         text: "No Actions",
-                        handler: function() {
+                        handler: function () {
                             return [0, null];
                         }
                     }
@@ -61,7 +65,40 @@ sap.ui.define([
                 this.getView().setModel(new JSONModel({ items: this.modes }), "modes");
                 this.switchState("Navigation");
 
+
+
             },
+
+            onAfterRendering: function () {
+
+                var that = this
+
+                var selectedItemValue = this._oStorage.get("baseModel");
+                var selectedItem = JSON.parse(selectedItemValue);
+                // check for the selected item
+                var millisecondsToWait = 500;
+                setTimeout(function () {
+                    // Whatever you want to do after the wait
+                    var table = that.getView().byId("table")
+                    console.log("table", table)
+                    var items = table.getRows()
+                    console.log("items", items)
+                    // loop through row
+                    for (var i = 0; i < items.length; i++) {
+                        var bindingContext = items[i].getBindingContext()
+                        if (bindingContext) {
+                            var object = bindingContext.getObject()
+                            if (object.ID === selectedItem.ID) {
+                                table.setSelectedIndex(i)
+                            }
+
+                        }
+                    }
+
+                }, millisecondsToWait);
+
+            },
+
             onNavIndicatorsToggle: function (oEvent) {
                 var oTable = this.byId("table");
                 var oToggleButton = oEvent.getSource();
@@ -189,6 +226,11 @@ sap.ui.define([
                     });
                 });
             },
+            selectionChangeHandler: function(oEvent) {
+                var selectedIndex = oEvent.getSource().getSelectedIndex();
+                var selectedItem = oEvent.getSource().getRows()[selectedIndex].getBindingContext().getObject()
+                this._oStorage.put("baseModel", JSON.stringify(selectedItem));
+            }
 
         });
     });
